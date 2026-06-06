@@ -1,0 +1,8 @@
+{
+  "title": "Avalanche (AVAX) Price",
+  "slug": "avalanche",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/avalanche.json",
+  "method": "GET",
+  "description": "Current Avalanche price and market data in USD"
+}

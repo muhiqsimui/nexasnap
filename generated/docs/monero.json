@@ -1,0 +1,8 @@
+{
+  "title": "Monero (XMR) Price",
+  "slug": "monero",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/monero.json",
+  "method": "GET",
+  "description": "Current Monero price and market data in USD"
+}

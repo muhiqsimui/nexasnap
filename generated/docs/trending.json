@@ -1,0 +1,8 @@
+{
+  "title": "Trending Coins",
+  "slug": "trending",
+  "category": "market",
+  "endpoint": "/api/v1/trending.json",
+  "method": "GET",
+  "description": "Currently trending coins on CoinGecko"
+}

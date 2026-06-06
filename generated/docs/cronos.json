@@ -1,0 +1,8 @@
+{
+  "title": "Cronos (CRO) Price",
+  "slug": "cronos",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/cronos.json",
+  "method": "GET",
+  "description": "Current Cronos price and market data in USD"
+}

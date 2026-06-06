@@ -1,0 +1,8 @@
+{
+  "title": "Ethereum Classic (ETC) Price",
+  "slug": "ethereum-classic",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/ethereum-classic.json",
+  "method": "GET",
+  "description": "Current Ethereum Classic price and market data in USD"
+}

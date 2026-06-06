@@ -1,0 +1,8 @@
+{
+  "title": "Crypto News Headlines",
+  "slug": "news",
+  "category": "news",
+  "endpoint": "/api/v1/news.json",
+  "method": "GET",
+  "description": "Latest cryptocurrency news headlines from CoinTelegraph"
+}

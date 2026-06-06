@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "monero",
+    "symbol": "xmr",
+    "name": "Monero",
+    "image": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
+    "current_price": 306.68,
+    "market_cap": 5758852325,
+    "market_cap_rank": 19,
+    "total_volume": 182115323,
+    "high_24h": 339.17,
+    "low_24h": 295.78,
+    "price_change_24h": -4.084675854616933,
+    "price_change_percentage_24h": -1.31441,
+    "circulating_supply": 18761245.99818657,
+    "total_supply": 18761259.798147,
+    "ath": 797.73,
+    "ath_date": "2026-01-14T19:34:07.049Z",
+    "atl": 0.216177,
+    "atl_date": "2015-01-14T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:24.428Z"
+  }
+}

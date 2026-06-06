@@ -1,0 +1,8 @@
+{
+  "title": "Toncoin (TON) Price",
+  "slug": "toncoin",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/toncoin.json",
+  "method": "GET",
+  "description": "Current Toncoin price and market data in USD"
+}

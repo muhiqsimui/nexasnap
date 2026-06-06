@@ -1,68 +1,141 @@
 ---
-import { getDocs } from "../lib/docs";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getDocs, getCategories, getDocsByCategory } from "../lib/docs";
 import { url } from "../lib/url";
 
 const docs = getDocs();
+const categories = getCategories(docs);
 const base = import.meta.env.BASE_URL;
+const categoryLabels: Record<string, string> = {
+  crypto: "Cryptocurrency",
+  market: "Market Data",
+  news: "News",
+};
 ---
 
-<html>
-  <head>
-    <title>NexaSnap</title>
-    <style>
-      body {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 2rem;
-        font-family: system-ui;
-      }
+<BaseLayout title="Home" description="Free Static API Platform powered by Astro, Go and GitHub Pages">
+  <section class="hero">
+    <h1 class="hero-title">NexaSnap</h1>
+    <p class="hero-subtitle">
+      Free Static API Platform — data from CoinGecko, served via GitHub Pages.
+      Updated daily.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-value">{docs.length}</span>
+        <span class="stat-label">Endpoints</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{categories.length}</span>
+        <span class="stat-label">Categories</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">Static</span>
+        <span class="stat-label">Delivery</span>
+      </div>
+    </div>
+  </section>
 
-      main {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
+  <section>
+    <h2>API Endpoints</h2>
+    <p class="description">
+      All endpoints are <code>GET</code> requests returning JSON. Base path:
+      <code>{base}/api/v1/</code>
+    </p>
 
-      a {
-        text-decoration: none;
-      }
+    {
+      categories.map((cat) => {
+        const catDocs = getDocsByCategory(docs, cat);
+        const label = categoryLabels[cat] || cat;
 
-      ul {
-        padding-left: 1rem;
-      }
-    </style>
-  </head>
+        return (
+          <div style="margin-bottom: 2rem;">
+            <h3 style="margin-bottom: 0.75rem;">{label}</h3>
+            <ul>
+              {catDocs.map((doc) => (
+                <li>
+                  <a href={url(base, `/docs/${doc.category}/${doc.slug}`)}>
+                    <span class="badge badge-get">{doc.method}</span>
+                    <code>{doc.endpoint}</code>
+                    <span class="meta" style="margin-left: auto;">{doc.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })
+    }
+  </section>
 
-  <body>
-    <main>
-      <h1>NexaSnap</h1>
+  <hr />
 
-      <p>
-        Free Static API Platform powered by Astro, Go Generator and GitHub
-        Pages.
-      </p>
+  <section>
+    <h2>Quick Start</h2>
+    <p class="description">
+      All endpoints are publicly accessible. No authentication required.
+    </p>
 
-      <hr />
+    <div class="card">
+      <p style="margin-bottom: 0.5rem; font-weight: 600;">Example: Get Bitcoin price</p>
+      <pre><code>curl https://muhiqsimui.github.io{base}/api/v1/crypto/bitcoin.json</code></pre>
+    </div>
 
-      <h2>Available Endpoints</h2>
+    <div class="card" style="margin-top: 1rem;">
+      <p style="margin-bottom: 0.5rem; font-weight: 600;">Example: Get market data</p>
+      <pre><code>curl https://muhiqsimui.github.io{base}/api/v1/markets.json</code></pre>
+    </div>
 
-      <ul>
-        {
-          docs.map((doc) => (
-            <li>
-              <a href={url(base, `/docs/${doc.category}/${doc.slug}`)}>
-                {doc.title}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+    <div style="margin-top: 1.5rem; text-align: center;">
+      <a href={url(base, "/docs")} style="color: var(--accent); font-weight: 500;">
+        Browse Full Documentation →
+      </a>
+    </div>
+  </section>
+</BaseLayout>
 
-      <hr />
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0;
+  }
 
-      <h2>Documentation</h2>
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-      <a href={url(base, "/docs")}>View API Docs → </a>
-    </main>
-  </body>
-</html>
+  .hero-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,8 @@
+{
+  "title": "USD Coin (USDC) Price",
+  "slug": "usd-coin",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/usd-coin.json",
+  "method": "GET",
+  "description": "Current USD Coin price and market data in USD"
+}

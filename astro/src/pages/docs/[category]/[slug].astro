@@ -1,6 +1,7 @@
 ---
 import fs from "node:fs";
 import path from "node:path";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { url } from "../../../lib/url";
 
 const base = import.meta.env.BASE_URL;
@@ -34,55 +35,69 @@ export async function getStaticPaths() {
 }
 
 const { doc, exampleResponse } = Astro.props;
+const categoryLabels: Record<string, string> = {
+  crypto: "Cryptocurrency",
+  market: "Market Data",
+  news: "News",
+};
+const categoryLabel = categoryLabels[doc.category] || doc.category;
 ---
 
-<html>
-  <head>
-    <title>{doc.title}</title>
-    <style>
-      body {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 2rem;
-        font-family: system-ui;
-      }
+<BaseLayout title={doc.title} description={doc.description}>
+  <a href={url(base, "/docs")} class="meta" style="display: inline-block; margin-bottom: 1rem;">
+    &larr; Back to Docs
+  </a>
 
-      pre {
-        overflow-x: auto;
-        padding: 1rem;
-        border-radius: 8px;
-      }
+  <div class="page-header">
+    <div>
+      <span class="meta" style="font-size: 0.85rem;">{categoryLabel}</span>
+      <h1 style="margin-bottom: 0.5rem;">{doc.title}</h1>
+      <p class="meta">{doc.description}</p>
+    </div>
+  </div>
 
-      code {
-        font-family: monospace;
-      }
-    </style>
-  </head>
+  <section>
+    <h2>Endpoint</h2>
+    <div class="endpoint-card">
+      <span class="badge badge-get">{doc.method}</span>
+      <code>{doc.endpoint}</code>
+    </div>
+  </section>
 
-  <body>
-    <a href={url(base, "/docs")}> Back to Docs </a>
-
-    <h1>{doc.title}</h1>
-
-    <p>{doc.description}</p>
-
-    <hr />
-
-    <p>
-      Method:
-      <strong>{doc.method}</strong>
-    </p>
-
-    <p>Endpoint:</p>
-
-    <code>
-      {doc.endpoint}
-    </code>
-
+  <section>
     <h2>Example Response</h2>
+    <pre><code>{JSON.stringify(exampleResponse, null, 2)}</code></pre>
+  </section>
 
-    <pre>
-{JSON.stringify(exampleResponse, null, 2)}
-</pre>
-  </body>
-</html>
+  <hr />
+
+  <section>
+    <h2>Try It</h2>
+    <div class="card">
+      <pre><code>curl https://muhiqsimui.github.io{base}{doc.endpoint}</code></pre>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .endpoint-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+</style>

@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "the-open-network",
+    "symbol": "ton",
+    "name": "Toncoin",
+    "image": "https://coin-images.coingecko.com/coins/images/17980/large/photo_2024-09-10_17.09.00.jpeg?1725963446",
+    "current_price": 1.52,
+    "market_cap": 4062265922,
+    "market_cap_rank": 26,
+    "total_volume": 283357694,
+    "high_24h": 1.58,
+    "low_24h": 1.45,
+    "price_change_24h": -0.02652273142367756,
+    "price_change_percentage_24h": -1.7161,
+    "circulating_supply": 2673333542.547886,
+    "total_supply": 5192423239.083446,
+    "ath": 8.25,
+    "ath_date": "2024-06-15T00:36:51.509Z",
+    "atl": 0.519364,
+    "atl_date": "2021-09-21T00:33:11.092Z",
+    "last_updated": "2026-06-06T06:48:25.358Z"
+  }
+}

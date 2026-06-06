@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "hedera-hashgraph",
+    "symbol": "hbar",
+    "name": "Hedera",
+    "image": "https://coin-images.coingecko.com/coins/images/3688/large/hbar.png?1696504364",
+    "current_price": 0.079009,
+    "market_cap": 3435913065,
+    "market_cap_rank": 28,
+    "total_volume": 154482497,
+    "high_24h": 0.082414,
+    "low_24h": 0.076926,
+    "price_change_24h": -0.002055113420203522,
+    "price_change_percentage_24h": -2.53517,
+    "circulating_supply": 43373517396.50511,
+    "total_supply": 50000000000,
+    "max_supply": 50000000000,
+    "ath": 0.569229,
+    "ath_date": "2021-09-15T10:40:28.318Z",
+    "atl": 0.00986111,
+    "atl_date": "2020-01-02T17:30:24.852Z",
+    "last_updated": "2026-06-06T06:48:26.687Z"
+  }
+}

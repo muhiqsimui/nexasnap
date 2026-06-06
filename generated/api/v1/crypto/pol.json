@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "polygon-ecosystem-token",
+    "symbol": "pol",
+    "name": "POL (ex-MATIC)",
+    "image": "https://coin-images.coingecko.com/coins/images/32440/large/pol.png?1759114181",
+    "current_price": 0.074853,
+    "market_cap": 797556492,
+    "market_cap_rank": 80,
+    "total_volume": 85723759,
+    "high_24h": 0.080942,
+    "low_24h": 0.071288,
+    "price_change_24h": -0.005631187163239806,
+    "price_change_percentage_24h": -6.99662,
+    "circulating_supply": 10656133395.30018,
+    "total_supply": 10656133395.30018,
+    "ath": 1.29,
+    "ath_date": "2024-03-13T18:55:06.692Z",
+    "atl": 0.071288,
+    "atl_date": "2026-06-05T19:10:45.870Z",
+    "last_updated": "2026-06-06T06:48:26.717Z"
+  }
+}

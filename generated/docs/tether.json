@@ -1,0 +1,8 @@
+{
+  "title": "Tether (USDT) Price",
+  "slug": "tether",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/tether.json",
+  "method": "GET",
+  "description": "Current Tether price and market data in USD"
+}

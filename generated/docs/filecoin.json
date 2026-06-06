@@ -1,0 +1,8 @@
+{
+  "title": "Filecoin (FIL) Price",
+  "slug": "filecoin",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/filecoin.json",
+  "method": "GET",
+  "description": "Current Filecoin price and market data in USD"
+}

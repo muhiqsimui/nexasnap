@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "ethereum-classic",
+    "symbol": "etc",
+    "name": "Ethereum Classic",
+    "image": "https://coin-images.coingecko.com/coins/images/453/large/ethereum-classic-logo.png?1696501717",
+    "current_price": 6.75,
+    "market_cap": 1058574461,
+    "market_cap_rank": 64,
+    "total_volume": 59055695,
+    "high_24h": 7.02,
+    "low_24h": 6.46,
+    "price_change_24h": -0.12410297696071826,
+    "price_change_percentage_24h": -1.80542,
+    "circulating_supply": 156559601.6228963,
+    "total_supply": 156559601.6228963,
+    "max_supply": 210700000,
+    "ath": 167.09,
+    "ath_date": "2021-05-06T18:34:22.133Z",
+    "atl": 0.615038,
+    "atl_date": "2016-07-25T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:05.978Z"
+  }
+}

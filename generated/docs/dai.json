@@ -1,0 +1,8 @@
+{
+  "title": "Dai (DAI) Price",
+  "slug": "dai",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/dai.json",
+  "method": "GET",
+  "description": "Current Dai price and market data in USD"
+}

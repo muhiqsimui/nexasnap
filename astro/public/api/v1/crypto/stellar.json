@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "stellar",
+    "symbol": "xlm",
+    "name": "Stellar",
+    "image": "https://coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?1735231350",
+    "current_price": 0.193755,
+    "market_cap": 6552729020,
+    "market_cap_rank": 15,
+    "total_volume": 980734693,
+    "high_24h": 0.206806,
+    "low_24h": 0.185806,
+    "price_change_24h": 0.0004729,
+    "price_change_percentage_24h": 0.24467,
+    "circulating_supply": 33728505530.67173,
+    "total_supply": 50001786839.91258,
+    "ath": 0.875563,
+    "ath_date": "2018-01-03T00:00:00.000Z",
+    "atl": 0.00047612,
+    "atl_date": "2015-03-05T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:24.188Z"
+  }
+}

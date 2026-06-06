@@ -1,0 +1,8 @@
+{
+  "title": "Stellar (XLM) Price",
+  "slug": "stellar",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/stellar.json",
+  "method": "GET",
+  "description": "Current Stellar price and market data in USD"
+}

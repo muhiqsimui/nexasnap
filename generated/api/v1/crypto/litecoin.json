@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "litecoin",
+    "symbol": "ltc",
+    "name": "Litecoin",
+    "image": "https://coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400",
+    "current_price": 42.38,
+    "market_cap": 3280682816,
+    "market_cap_rank": 29,
+    "total_volume": 527331310,
+    "high_24h": 44.53,
+    "low_24h": 40.78,
+    "price_change_24h": -1.078204220262208,
+    "price_change_percentage_24h": -2.48109,
+    "circulating_supply": 77246401.98347135,
+    "total_supply": 77249995.73347135,
+    "max_supply": 84000000,
+    "ath": 410.26,
+    "ath_date": "2021-05-10T03:13:07.904Z",
+    "atl": 1.15,
+    "atl_date": "2015-01-14T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:25.491Z"
+  }
+}

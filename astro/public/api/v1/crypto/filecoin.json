@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "filecoin",
+    "symbol": "fil",
+    "name": "Filecoin",
+    "image": "https://coin-images.coingecko.com/coins/images/12817/large/filecoin.png?1696512609",
+    "current_price": 0.714545,
+    "market_cap": 564173462,
+    "market_cap_rank": 91,
+    "total_volume": 204976174,
+    "high_24h": 0.806763,
+    "low_24h": 0.677565,
+    "price_change_24h": -0.08163098176686079,
+    "price_change_percentage_24h": -10.25288,
+    "circulating_supply": 787961163,
+    "total_supply": 1957722642,
+    "ath": 236.84,
+    "ath_date": "2021-04-01T13:29:41.564Z",
+    "atl": 0.677565,
+    "atl_date": "2026-06-06T05:05:41.903Z",
+    "last_updated": "2026-06-06T06:48:24.659Z"
+  }
+}

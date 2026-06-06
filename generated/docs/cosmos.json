@@ -1,0 +1,8 @@
+{
+  "title": "Cosmos (ATOM) Price",
+  "slug": "cosmos",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/cosmos.json",
+  "method": "GET",
+  "description": "Current Cosmos price and market data in USD"
+}

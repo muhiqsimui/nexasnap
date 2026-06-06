@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "solana",
+    "symbol": "sol",
+    "name": "Solana",
+    "image": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+    "current_price": 62.7,
+    "market_cap": 36341684951,
+    "market_cap_rank": 7,
+    "total_volume": 6482240028,
+    "high_24h": 66.58,
+    "low_24h": 60.4,
+    "price_change_24h": -2.3800817168603885,
+    "price_change_percentage_24h": -3.65733,
+    "circulating_supply": 578559190.8938596,
+    "total_supply": 627785953.9209518,
+    "ath": 293.31,
+    "ath_date": "2025-01-19T11:15:27.957Z",
+    "atl": 0.500801,
+    "atl_date": "2020-05-11T19:35:23.449Z",
+    "last_updated": "2026-06-06T06:48:24.245Z"
+  }
+}

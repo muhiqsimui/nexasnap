@@ -1,0 +1,8 @@
+{
+  "title": "Sui (SUI) Price",
+  "slug": "sui",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/sui.json",
+  "method": "GET",
+  "description": "Current Sui price and market data in USD"
+}

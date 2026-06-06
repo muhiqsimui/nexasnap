@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "tether",
+    "symbol": "usdt",
+    "name": "Tether",
+    "image": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+    "current_price": 0.999436,
+    "market_cap": 187009987479,
+    "market_cap_rank": 3,
+    "total_volume": 115156639355,
+    "high_24h": 0.99975,
+    "low_24h": 0.998948,
+    "price_change_24h": 0.00038211,
+    "price_change_percentage_24h": 0.03825,
+    "circulating_supply": 187111567219.6885,
+    "total_supply": 192578508841.4762,
+    "ath": 1.32,
+    "ath_date": "2018-07-24T00:00:00.000Z",
+    "atl": 0.572521,
+    "atl_date": "2015-03-02T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:26.691Z"
+  }
+}

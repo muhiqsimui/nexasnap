@@ -1,0 +1,8 @@
+{
+  "title": "Dogecoin (DOGE) Price",
+  "slug": "dogecoin",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/dogecoin.json",
+  "method": "GET",
+  "description": "Current Dogecoin price and market data in USD"
+}

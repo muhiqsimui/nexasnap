@@ -1,0 +1,8 @@
+{
+  "title": "Chainlink (LINK) Price",
+  "slug": "chainlink",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/chainlink.json",
+  "method": "GET",
+  "description": "Current Chainlink price and market data in USD"
+}

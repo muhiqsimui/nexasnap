@@ -1,0 +1,8 @@
+{
+  "title": "POL (POL) Price",
+  "slug": "pol",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/pol.json",
+  "method": "GET",
+  "description": "Current POL price and market data in USD"
+}

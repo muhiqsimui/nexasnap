@@ -1,0 +1,8 @@
+{
+  "title": "XRP (XRP) Price",
+  "slug": "ripple",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/ripple.json",
+  "method": "GET",
+  "description": "Current XRP price and market data in USD"
+}

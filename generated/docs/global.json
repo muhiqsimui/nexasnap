@@ -1,0 +1,8 @@
+{
+  "title": "Global Cryptocurrency Market Data",
+  "slug": "global",
+  "category": "market",
+  "endpoint": "/api/v1/global.json",
+  "method": "GET",
+  "description": "Global cryptocurrency market overview including total market cap, volume, and BTC/ETH dominance"
+}

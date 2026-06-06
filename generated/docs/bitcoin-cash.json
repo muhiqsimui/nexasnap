@@ -1,0 +1,8 @@
+{
+  "title": "Bitcoin Cash (BCH) Price",
+  "slug": "bitcoin-cash",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/bitcoin-cash.json",
+  "method": "GET",
+  "description": "Current Bitcoin Cash price and market data in USD"
+}

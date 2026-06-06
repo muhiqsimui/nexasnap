@@ -1,0 +1,8 @@
+{
+  "title": "Shiba Inu (SHIB) Price",
+  "slug": "shiba-inu",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/shiba-inu.json",
+  "method": "GET",
+  "description": "Current Shiba Inu price and market data in USD"
+}

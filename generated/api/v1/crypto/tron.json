@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "tron",
+    "symbol": "trx",
+    "name": "TRON",
+    "image": "https://coin-images.coingecko.com/coins/images/1094/large/photo_2026-04-13_09-59-16.png?1776048311",
+    "current_price": 0.320067,
+    "market_cap": 30364728451,
+    "market_cap_rank": 8,
+    "total_volume": 991092273,
+    "high_24h": 0.326474,
+    "low_24h": 0.318493,
+    "price_change_24h": -0.004737728152301113,
+    "price_change_percentage_24h": -1.45864,
+    "circulating_supply": 94818840987.34096,
+    "total_supply": 94819936296.00316,
+    "ath": 0.431288,
+    "ath_date": "2024-12-04T00:10:40.323Z",
+    "atl": 0.00180434,
+    "atl_date": "2017-11-12T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:24.767Z"
+  }
+}

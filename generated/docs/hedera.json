@@ -1,0 +1,8 @@
+{
+  "title": "Hedera (HBAR) Price",
+  "slug": "hedera",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/hedera.json",
+  "method": "GET",
+  "description": "Current Hedera price and market data in USD"
+}

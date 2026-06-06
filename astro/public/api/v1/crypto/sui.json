@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "sui",
+    "symbol": "sui",
+    "name": "Sui",
+    "image": "https://coin-images.coingecko.com/coins/images/26375/large/sui-ocean-square.png?1727791290",
+    "current_price": 0.700631,
+    "market_cap": 2828154944,
+    "market_cap_rank": 33,
+    "total_volume": 940436681,
+    "high_24h": 0.727614,
+    "low_24h": 0.666991,
+    "price_change_24h": -0.00435376244511565,
+    "price_change_percentage_24h": -0.61757,
+    "circulating_supply": 4029196852.454399,
+    "total_supply": 10000000000,
+    "max_supply": 10000000000,
+    "ath": 5.35,
+    "ath_date": "2025-01-04T22:56:18.063Z",
+    "atl": 0.364846,
+    "atl_date": "2023-10-19T10:40:30.078Z",
+    "last_updated": "2026-06-06T06:48:26.016Z"
+  }
+}

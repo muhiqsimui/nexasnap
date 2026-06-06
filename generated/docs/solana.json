@@ -1,0 +1,8 @@
+{
+  "title": "Solana (SOL) Price",
+  "slug": "solana",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/solana.json",
+  "method": "GET",
+  "description": "Current Solana price and market data in USD"
+}

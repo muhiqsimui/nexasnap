@@ -1,0 +1,8 @@
+{
+  "title": "TRON (TRX) Price",
+  "slug": "tron",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/tron.json",
+  "method": "GET",
+  "description": "Current TRON price and market data in USD"
+}

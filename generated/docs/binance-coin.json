@@ -1,0 +1,8 @@
+{
+  "title": "BNB (BNB) Price",
+  "slug": "binance-coin",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/binance-coin.json",
+  "method": "GET",
+  "description": "Current BNB price and market data in USD"
+}

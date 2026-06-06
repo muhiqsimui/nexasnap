@@ -1,8 +1,27 @@
 {
-  "data": {
-    "usd": 60529
-  },
-  "source": "CoinGecko",
   "success": true,
-  "updated": "2026-06-06T04:08:08.219329Z"
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "bitcoin",
+    "symbol": "btc",
+    "name": "Bitcoin",
+    "image": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
+    "current_price": 60840,
+    "market_cap": 1218959324406,
+    "market_cap_rank": 1,
+    "total_volume": 71993465506,
+    "high_24h": 63051,
+    "low_24h": 59228,
+    "price_change_24h": -1095.9411260490524,
+    "price_change_percentage_24h": -1.76947,
+    "circulating_supply": 20039087,
+    "total_supply": 20039087,
+    "max_supply": 21000000,
+    "ath": 126080,
+    "ath_date": "2025-10-06T18:57:42.558Z",
+    "atl": 67.81,
+    "atl_date": "2013-07-06T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:24.440Z"
+  }
 }

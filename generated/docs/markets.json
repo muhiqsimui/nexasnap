@@ -1,0 +1,8 @@
+{
+  "title": "Cryptocurrency Markets",
+  "slug": "markets",
+  "category": "market",
+  "endpoint": "/api/v1/markets.json",
+  "method": "GET",
+  "description": "Top 100 cryptocurrencies by market cap with price, volume, and market data"
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Litecoin (LTC) Price",
+  "slug": "litecoin",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/litecoin.json",
+  "method": "GET",
+  "description": "Current Litecoin price and market data in USD"
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Cardano (ADA) Price",
+  "slug": "cardano",
+  "category": "crypto",
+  "endpoint": "/api/v1/crypto/cardano.json",
+  "method": "GET",
+  "description": "Current Cardano price and market data in USD"
+}

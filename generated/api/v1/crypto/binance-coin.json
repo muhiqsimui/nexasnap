@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "binancecoin",
+    "symbol": "bnb",
+    "name": "BNB",
+    "image": "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+    "current_price": 575.16,
+    "market_cap": 77565374961,
+    "market_cap_rank": 4,
+    "total_volume": 2189849723,
+    "high_24h": 595.44,
+    "low_24h": 559.01,
+    "price_change_24h": -5.345763119048911,
+    "price_change_percentage_24h": -0.92088,
+    "circulating_supply": 134784203.2699999,
+    "total_supply": 134784201.72,
+    "max_supply": 200000000,
+    "ath": 1369.99,
+    "ath_date": "2025-10-13T08:41:24.131Z",
+    "atl": 0.0398177,
+    "atl_date": "2017-10-19T00:00:00.000Z",
+    "last_updated": "2026-06-06T06:48:24.225Z"
+  }
+}

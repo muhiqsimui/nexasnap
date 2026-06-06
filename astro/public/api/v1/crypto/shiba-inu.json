@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source": "CoinGecko",
+  "updated": "2026-06-06T06:48:59.1104154Z",
+  "data": {
+    "id": "shiba-inu",
+    "symbol": "shib",
+    "name": "Shiba Inu",
+    "image": "https://coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+    "current_price": 0.00000451,
+    "market_cap": 2659362843,
+    "market_cap_rank": 35,
+    "total_volume": 122078372,
+    "high_24h": 0.00000479,
+    "low_24h": 0.00000432,
+    "price_change_24h": -1.99793453382e-7,
+    "price_change_percentage_24h": -4.24485,
+    "circulating_supply": 589243213280934.4,
+    "total_supply": 589499863749284.1,
+    "ath": 0.00008616,
+    "ath_date": "2021-10-28T03:54:55.568Z",
+    "atl": 5.6366e-11,
+    "atl_date": "2020-11-28T11:26:25.838Z",
+    "last_updated": "2026-06-06T06:48:24.806Z"
+  }
+}

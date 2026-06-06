@@ -1,7 +1,14 @@
 name: Deploy NexaSnap
 
 on:
+  schedule:
+    - cron: '0 6 * * *'
+
   workflow_dispatch:
+
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -29,6 +36,8 @@ jobs:
 
       - name: Setup Go
         uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
 
       - name: Install Astro Dependencies
         working-directory: astro
@@ -41,6 +50,8 @@ jobs:
       - name: Generate API Data
         working-directory: generator
         run: go run ./cmd
+        env:
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
 
       - name: Sync API
         working-directory: astro

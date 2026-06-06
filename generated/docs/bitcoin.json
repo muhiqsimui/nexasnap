@@ -1,8 +1,8 @@
 {
+  "title": "Bitcoin (BTC) Price",
+  "slug": "bitcoin",
   "category": "crypto",
-  "description": "Current Bitcoin price in USD",
   "endpoint": "/api/v1/crypto/bitcoin.json",
   "method": "GET",
-  "slug": "bitcoin",
-  "title": "Bitcoin Price"
+  "description": "Current Bitcoin price and market data in USD"
 }
