@@ -1,6 +1,7 @@
 ---
 import fs from "node:fs";
 import path from "node:path";
+import { url } from "../../../lib/url";
 
 export async function getStaticPaths() {
   const docsDir = path.resolve("../generated/docs");
@@ -10,6 +11,13 @@ export async function getStaticPaths() {
   return files.map((file) => {
     const doc = JSON.parse(fs.readFileSync(path.join(docsDir, file), "utf-8"));
 
+    const apiFile = path.resolve(
+      "../generated",
+      doc.endpoint.replace(/^\//, ""),
+    );
+
+    const exampleResponse = JSON.parse(fs.readFileSync(apiFile, "utf-8"));
+
     return {
       params: {
         category: doc.category,
@@ -17,20 +25,41 @@ export async function getStaticPaths() {
       },
       props: {
         doc,
+        exampleResponse,
       },
     };
   });
 }
 
-const { doc } = Astro.props;
+const { doc, exampleResponse } = Astro.props;
 ---
 
 <html>
   <head>
     <title>{doc.title}</title>
+    <style>
+      body {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        font-family: system-ui;
+      }
+
+      pre {
+        overflow-x: auto;
+        padding: 1rem;
+        border-radius: 8px;
+      }
+
+      code {
+        font-family: monospace;
+      }
+    </style>
   </head>
 
   <body>
+    <a href={url("/docs")}> Back to Docs </a>
+
     <h1>{doc.title}</h1>
 
     <p>{doc.description}</p>
@@ -47,5 +76,11 @@ const { doc } = Astro.props;
     <code>
       {doc.endpoint}
     </code>
+
+    <h2>Example Response</h2>
+
+    <pre>
+{JSON.stringify(exampleResponse, null, 2)}
+</pre>
   </body>
 </html>

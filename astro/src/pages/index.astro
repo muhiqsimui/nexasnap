@@ -1,14 +1,65 @@
 ---
+import { getDocs } from "../lib/docs";
+import { url } from "../lib/url";
 
+const docs = getDocs();
 ---
 
-<html lang="en">
+<html>
   <head>
     <title>NexaSnap</title>
+    <style>
+      body {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+        font-family: system-ui;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      ul {
+        padding-left: 1rem;
+      }
+    </style>
   </head>
 
   <body>
-    <h1>NexaSnap</h1>
-    <p>Static API Platform</p>
+    <main>
+      <h1>NexaSnap</h1>
+
+      <p>
+        Free Static API Platform powered by Astro, Go Generator and GitHub
+        Pages.
+      </p>
+
+      <hr />
+
+      <h2>Available Endpoints</h2>
+
+      <ul>
+        {
+          docs.map((doc) => (
+            <li>
+              <a href={url(`/docs/${doc.category}/${doc.slug}`)}>{doc.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <hr />
+
+      <h2>Documentation</h2>
+
+      <a href={url("/docs")}>View API Docs → </a>
+    </main>
   </body>
 </html>
