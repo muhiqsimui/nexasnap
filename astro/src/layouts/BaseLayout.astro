@@ -74,14 +74,63 @@ const base = import.meta.env.BASE_URL;
     </main>
 
     <footer class="footer">
-      <p>
-        // POWERED BY ASTRO, GO &amp; GITHUB PAGES • DATA FROM COINGECKO API
-      </p>
+      <style>
+        /* Animasi gerak gradasi background */
+        @keyframes gradientMove {
+          0% {
+            background-position: 0% center;
+          }
+          50% {
+            background-position: 100% center;
+          }
+          100% {
+            background-position: 0% center;
+          }
+        }
+        /* Efek hover yang tidak bisa di-inline */
+        .hover-scale:hover {
+          transform: scale(1.1);
+        }
+      </style>
+
+      <a
+        href="https://www.skills.web.id"
+        rel="sponsored"
+        target="_blank"
+        class="hover-scale"
+        style="
+    position: relative;
+    font-weight: 900;
+    background: linear-gradient(to right, #67e8f9, #dbeafe, #67e8f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    display: block;
+    background-size: 200% auto;
+    animation: gradientMove 3s linear infinite;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  "
+      >
+        BUILD YOUR DREAM WEBSITE ON SKILLS.WEB.ID
+      </a>
     </footer>
   </body>
 </html>
 
 <style is:global>
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+    100% {
+      background-position: 0% center;
+    }
+  }
   /* Sinkronisasi Token Warna Menjadi Cyber Cyan / Neon Blue */
   :root {
     --bg: #030712;
@@ -288,7 +337,7 @@ const base = import.meta.env.BASE_URL;
     text-align: center;
     padding: 2.5rem;
     border-top: 1px solid var(--border);
-    color: #27272a;
+    color: #fafafd;
     font-size: 0.75rem;
     font-family: "JetBrains Mono", monospace;
     letter-spacing: 0.05em;

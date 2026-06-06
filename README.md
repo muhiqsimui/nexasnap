@@ -1,11 +1,19 @@
+[![Deploy](https://github.com/muhiqsimui/nexasnap/actions/workflows/deploy.yml/badge.svg)](https://github.com/muhiqsimui/nexasnap/actions/workflows/deploy.yml)
+
 <div style="text-align: center;">
   <img src="./assets/nexasnap-logo.webp" width="50" alt="logo">
-  <h1 style="margin: 0;">NEXASNAP</h1>
+  <h1 style="margin: 0;">NEXASNAP (Zero Cost API)</h1>
+</div>
+
+<div align=center>
+
+![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)
+![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+
 </div>
 
 > Free Static API Platform — data from CoinGecko, served via GitHub Pages. Updated daily.
-
-[![Deploy](https://github.com/muhiqsimui/nexasnap/actions/workflows/deploy.yml/badge.svg)](https://github.com/muhiqsimui/nexasnap/actions/workflows/deploy.yml)
 
 NexaSnap is a **static API platform** that runs entirely on GitHub Pages. A Go generator fetches data from upstream APIs and web scraping, generates static JSON endpoints, and builds an Astro documentation site — all triggered daily via GitHub Actions.
 
@@ -13,45 +21,43 @@ No backend server, no database, no hosting costs.
 
 <img src="./assets/nexasnap-banner.webp">
 
----
+## Architecture Pipline
 
-## Architecture
-
-```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   CoinGecko API  │     │  CoinTelegraph   │     │    More APIs    │
-│   (REST)         │     │  (Scraping)      │     │    (Future)     │
-└────────┬────────┘     └────────┬─────────┘     └────────┬────────┘
-         │                       │                        │
-         ▼                       ▼                        ▼
-┌──────────────────────────────────────────────────────────────┐
-│                  Go Generator (generator/)                     │
-│  • Fetch → Transform → Write JSON → Generate Docs            │
-│  • Triggered by: GitHub Actions (daily 06:00 UTC)            │
-└──────────────────────────┬───────────────────────────────────┘
-                           │
-                           ▼
-┌──────────────────────────────────────────────────────────────┐
-│                  generated/                                   │
-│  • api/v1/*.json        ← Static API endpoints               │
-│  • docs/*.json          ← Documentation metadata             │
-└──────────────────────────┬───────────────────────────────────┘
-                           │
-                           ▼
-┌──────────────────────────────────────────────────────────────┐
-│                  Astro SSG (astro/)                            │
-│  • Reads generated/ at build time                             │
-│  • Copies API files to public/api/                            │
-│  • Generates documentation pages dynamically                  │
-│  • Output: static HTML + JSON → dist/                         │
-└──────────────────────────┬───────────────────────────────────┘
-                           │
-                           ▼
-┌──────────────────────────────────────────────────────────────┐
-│                  GitHub Pages                                  │
-│  • Serves everything for free                                 │
-│  • Zero server, zero database, zero cost                      │
-└──────────────────────────────────────────────────────────────┘
+```text
+┌───────────────────────────────────────────────────────────┐
+│                    External Sources                       │
+├───────────────────────────────────────────────────────────┤
+│ CoinGecko API (REST) • CoinTelegraph • Future APIs        │
+└──────────────────────────────┬────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────┐
+│                Go Generator (generator/)                  │
+├───────────────────────────────────────────────────────────┤
+│ Fetch → Transform → Generate JSON & Docs                  │
+│ Triggered daily by GitHub Actions (06:00 UTC)             │
+└──────────────────────────────┬────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────┐
+│                      generated/                           │
+├───────────────────────────────────────────────────────────┤
+│ api/v1/*.json • docs/*.json                               │
+└──────────────────────────────┬────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────┐
+│                   Astro SSG (astro/)                      │
+├───────────────────────────────────────────────────────────┤
+│ Build static pages & API files → dist/                    │
+└──────────────────────────────┬────────────────────────────┘
+                               │
+                               ▼
+┌───────────────────────────────────────────────────────────┐
+│                     GitHub Pages                          │
+├───────────────────────────────────────────────────────────┤
+│ Static hosting • No server • No database • Zero cost      │
+└───────────────────────────────────────────────────────────┘
 ```
 
 ## API Endpoints
@@ -129,8 +135,8 @@ nexasnap/
 
 ### Prerequisites
 
-- Go 1.22+
-- Node.js 22+
+- Go 1.26+
+- Node.js 24+
 - CoinGecko API key (free: https://www.coingecko.com/en/api)
 
 ### Setup
