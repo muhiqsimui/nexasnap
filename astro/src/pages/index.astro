@@ -23,7 +23,7 @@ const categoryLabels: Record<string, string> = {
   >
     <canvas
       id="matrixCanvas"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.45; z-index: 1;"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.5; z-index: 1;"
     ></canvas>
 
     <div
@@ -273,7 +273,7 @@ const categoryLabels: Record<string, string> = {
                       <li>
                         <a
                           href={url(base, `/docs/${doc.category}/${doc.slug}`)}
-                          style="display: flex; align-items: center; gap: 1.25rem; padding: 0.85rem 1.25rem; background: #05070f; border: 1px solid #1f2937; border-radius: 10px; font-size: 0.9rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);"
+                          style="display: flex; align-items: center; gap: 1.25rem; padding: 0.85rem 1.25rem; background: #05070f; border: 1px solid #1f2937; border-radius: 10px; font-size: 0.9rem; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; color: inherit;"
                           onmouseover="this.style.borderColor='#06b6d4'; this.style.background='#081521'; this.style.transform='translateX(6px)'"
                           onmouseout="this.style.borderColor='#1f2937'; this.style.background='#05070f'; this.style.transform='translateX(0)'"
                         >
@@ -284,10 +284,13 @@ const categoryLabels: Record<string, string> = {
                             {doc.endpoint}
                           </code>
                           <span
-                            style="margin-left: auto; color: #475569; font-size: 0.85rem; transition: color 0.2s;"
+                            style="margin-left: auto; color: #475569; font-size: 0.85rem; transition: color 0.2s; display: inline-flex; align-items: center;"
                             class="endpoint-title"
                           >
-                            {doc.title} &rarr;
+                            <span style="color: #94a3b8; margin-right: 4px;">
+                              {doc.title}
+                            </span>{" "}
+                            &rarr;
                           </span>
                         </a>
                       </li>
@@ -316,97 +319,110 @@ const categoryLabels: Record<string, string> = {
   </div>
 </BaseLayout>
 
-<script type="text/javascript">
-  const canvas = document.getElementById("matrixCanvas");
-  const ctx = canvas.getContext("2d");
+<script is:inline data-astro-rerun>
+  (function () {
+    const canvas = document.getElementById("matrixCanvas");
+    if (!canvas) return;
 
-  let width = (canvas.width = canvas.parentElement.offsetWidth);
-  let height = (canvas.height = canvas.parentElement.offsetHeight);
+    const ctx = canvas.getContext("2d");
+    let animId;
 
-  function resizeCanvas() {
-    width = canvas.width = canvas.parentElement.offsetWidth;
-    height = canvas.height = canvas.parentElement.offsetHeight;
-  }
-  window.addEventListener("resize", resizeCanvas);
+    // AMAN: Hitung berdasarkan kontainer pembungkus penuh (atau window jika kontainer dinamis)
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = Math.max(
+      canvas.parentElement.scrollHeight,
+      window.innerHeight,
+    ));
 
-  const matrixChars = "0101X9F2A7B5C3D8E0101M4K7L2PQ9RS01";
-  const charsArr = matrixChars.split("");
+    function resizeCanvas() {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = Math.max(
+        canvas.parentElement.scrollHeight,
+        window.innerHeight,
+      );
+    }
+    window.addEventListener("resize", resizeCanvas);
 
-  // Logika Sistem Partikel Lorong 3D (Melesat ke arah Pengguna)
-  const maxParticles = 180;
-  const particles = [];
+    const matrixChars = "0101X9F2A7B5C3D8E0101M4K7L2PQ9RS01";
+    const charsArr = matrixChars.split("");
 
-  for (let i = 0; i < maxParticles; i++) {
-    particles.push({
-      x: (Math.random() - 0.5) * width,
-      y: (Math.random() - 0.5) * height,
-      z: Math.random() * width, // Kedalaman sumbu Z
-      char: charsArr[Math.floor(Math.random() * charsArr.length)],
-    });
-  }
-
-  function draw3DMatrix() {
-    // Background fade-out hitam transparan untuk jejak trail starfield
-    ctx.fillStyle = "rgba(3, 7, 18, 0.18)";
-    ctx.fillRect(0, 0, width, height);
-
-    const cx = width / 2;
-    const cy = height / 3; // Sudut fokus hilangnya jalanan agak dinaikkan di area Hero
+    const maxParticles = 220; // Ditambah sedikit biar space tunnel lebih padat megah
+    const particles = [];
 
     for (let i = 0; i < maxParticles; i++) {
-      const p = particles[i];
-
-      // Kurangi jarak Z untuk menggerakkan elemen mendekat ke layar luar
-      p.z -= 4.5;
-
-      // Reset partikel jika menabrak atau melewati kamera/layar depan
-      if (p.z <= 0) {
-        p.x = (Math.random() - 0.5) * width;
-        p.y = (Math.random() - 0.5) * height;
-        p.z = width;
-        p.char = charsArr[Math.floor(Math.random() * charsArr.length)];
-      }
-
-      // Rumus Proyeksi Perspektif 3D ke Layar 2D
-      const k = 400 / p.z; // Faktor skala ukuran jarak
-      const px = p.x * k + cx;
-      const py = p.y * k + cy;
-
-      // Skip render jika posisi terlempar ke luar batas kanvas asli
-      if (px < 0 || px > width || py < 0 || py > height) continue;
-
-      // Kalkulasi ukuran font berdasarkan kedalaman sumbu Z (Makin dekat makin raksasa)
-      const size = Math.min(Math.max((1 - p.z / width) * 22, 8), 24);
-      ctx.font = `${size}px monospace`;
-
-      // Skema pewarnaan pendaran pudar berbasis kedalaman Z
-      const alpha = 1 - p.z / width; // Makin dekat makin cerah solid
-
-      if (alpha > 0.85) {
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`; // Kepala melesat: Putih berkilau
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = "#38bdf8";
-      } else if (alpha > 0.5) {
-        ctx.fillStyle = `rgba(56, 189, 248, ${alpha})`; // Badan tengah: Cyan Neon Blue
-        ctx.shadowBlur = 0;
-      } else {
-        ctx.fillStyle = `rgba(8, 145, 178, ${alpha})`; // Ekor belakang: Cyan redup gelap
-        ctx.shadowBlur = 0;
-      }
-
-      // Acak karakter di perjalanan agar dinamis layaknya barisan enkripsi real-time
-      if (Math.random() > 0.95) {
-        p.char = charsArr[Math.floor(Math.random() * charsArr.length)];
-      }
-
-      ctx.fillText(p.char, px, py);
+      particles.push({
+        x: (Math.random() - 0.5) * width,
+        y: (Math.random() - 0.5) * height,
+        z: Math.random() * width,
+        char: charsArr[Math.floor(Math.random() * charsArr.length)],
+      });
     }
 
-    requestAnimationFrame(draw3DMatrix);
-  }
+    function draw3DMatrix() {
+      ctx.fillStyle = "rgba(3, 7, 18, 0.22)"; // Trail fade-out diatur pas agar tidak patah-patah
+      ctx.fillRect(0, 0, width, height);
 
-  // Jalankan animasi loop performa tinggi
-  requestAnimationFrame(draw3DMatrix);
+      // Fokus lenyap diatur seimbang mengikuti tinggi hero
+      const cx = width / 2;
+      const cy = height / 4.5;
+
+      for (let i = 0; i < maxParticles; i++) {
+        const p = particles[i];
+        p.z -= 4.2;
+
+        if (p.z <= 0) {
+          p.x = (Math.random() - 0.5) * width;
+          p.y = (Math.random() - 0.5) * height;
+          p.z = width;
+          p.char = charsArr[Math.floor(Math.random() * charsArr.length)];
+        }
+
+        const k = 420 / p.z;
+        const px = p.x * k + cx;
+        const py = p.y * k + cy;
+
+        if (px < 0 || px > width || py < 0 || py > height) continue;
+
+        const size = Math.min(Math.max((1 - p.z / width) * 24, 7), 26);
+        ctx.font = `${size}px monospace`;
+
+        const alpha = 1 - p.z / width;
+
+        if (alpha > 0.84) {
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = "#06b6d4";
+        } else if (alpha > 0.45) {
+          ctx.fillStyle = `rgba(34, 211, 238, ${alpha})`;
+          ctx.shadowBlur = 0;
+        } else {
+          ctx.fillStyle = `rgba(8, 145, 178, ${alpha * 0.7})`;
+          ctx.shadowBlur = 0;
+        }
+
+        if (Math.random() > 0.96) {
+          p.char = charsArr[Math.floor(Math.random() * charsArr.length)];
+        }
+
+        ctx.fillText(p.char, px, py);
+      }
+
+      animId = requestAnimationFrame(draw3DMatrix);
+    }
+
+    animId = requestAnimationFrame(draw3DMatrix);
+
+    // Bersihkan listener dan frame saat pindah halaman (Astro View Transitions safety)
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        cancelAnimationFrame(animId);
+        window.removeEventListener("resize", resizeCanvas);
+      },
+      { once: true },
+    );
+  })();
 </script>
 
 <style>
@@ -418,7 +434,6 @@ const categoryLabels: Record<string, string> = {
     }
   }
 
-  /* Animasi melayang halus untuk Logo WebP Core */
   @keyframes float {
     0%,
     100% {
@@ -464,7 +479,9 @@ const categoryLabels: Record<string, string> = {
     border-color: rgba(6, 182, 212, 0.4) !important;
   }
 
-  li a:hover .endpoint-title {
-    color: #94a3b8 !important;
+  /* Fix: Ketika baris di-hover, teks panah kanan di halaman utama ikut menyala cyan */
+  li a:hover .endpoint-title,
+  li a:hover .endpoint-title span {
+    color: #22d3ee !important;
   }
 </style>

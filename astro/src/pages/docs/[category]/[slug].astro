@@ -3,6 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { url } from "../../../lib/url";
+// Import komponen Code bawaan Astro untuk syntax highlighting otomatis
+import { Code } from "astro:components";
 
 const base = import.meta.env.BASE_URL;
 
@@ -39,29 +41,47 @@ const categoryLabels: Record<string, string> = {
 };
 const categoryLabel = categoryLabels[doc.category] || doc.category;
 
-// Setup warna dinamis berbasis HTTP Method
 const isGet = doc.method?.toUpperCase() === "GET";
 const methodColor = isGet ? "#10b981" : "#3b82f6";
 const methodBg = isGet ? "rgba(16, 185, 129, 0.1)" : "rgba(59, 130, 246, 0.1)";
 const methodBorder = isGet
   ? "rgba(16, 185, 129, 0.2)"
   : "rgba(59, 130, 246, 0.2)";
+
+const fullUrl = `https://muhiqsimui.github.io${base}${doc.endpoint.replace(/^\//, "")}`;
+
+// Generate Snippets untuk beberapa bahasa pemrograman
+const snippets = {
+  curl: `curl -X ${doc.method} "${fullUrl}"`,
+  javascript: `fetch("${fullUrl}", {
+  method: "${doc.method}"
+})
+  .then(res => res.json())
+  .then(data => console.log(data));`,
+  python: `import requests
+
+url = "${fullUrl}"
+response = requests.${doc.method?.toLowerCase()}(url)
+print(response.json())`,
+  php: `<?php
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "${fullUrl}");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "${doc.method}");
+$response = curl_exec($ch);
+curl_close($ch);
+$data = json_decode($response, true);
+?>`,
+};
+
+const jsonString = JSON.stringify(exampleResponse, null, 2);
 ---
 
 <BaseLayout title={doc.title} description={doc.description}>
-  <!-- Wrapper Utama Dark Web3 -->
-  <div
-    class="api-slug-container"
-    style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #e2e8f0; background-color: #030712; min-height: 100vh;"
-  >
-    <!-- Tombol Back Modern -->
-    <a
-      href={url(base, "/docs")}
-      class="back-link"
-      style="display: inline-flex; align-items: center; gap: 0.5rem; color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 500; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #0b0f19; border: 1px solid #1f2937; border-radius: 9999px; transition: all 0.2s;"
-      onmouseover="this.style.color='#10b981'; this.style.borderColor='#10b981'"
-      onmouseout="this.style.color='#94a3b8'; this.style.borderColor='#1f2937'"
-    >
+  <canvas id="matrix-canvas"></canvas>
+
+  <div class="api-slug-container">
+    <a href={url(base, "/docs")} class="back-link">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="14"
@@ -78,74 +98,57 @@ const methodBorder = isGet
       Back to Docs
     </a>
 
-    <!-- Layout Grid: Kiri Konten, Kanan Code/Terminal -->
-    <div
-      class="main-grid"
-      style="display: grid; grid-template-columns: 1fr; gap: 2.5rem;"
-    >
-      <!-- KOLOM KIRI: Dokumentasi & Detail -->
-      <div
-        class="left-panel"
-        style="display: flex; flex-direction: column; gap: 2.5rem;"
-      >
-        <!-- Header Halaman -->
-        <header
-          style="border-bottom: 1px solid #1f2937; padding-bottom: 2rem; position: relative;"
-        >
-          <div
-            style="position: absolute; top: -30px; left: -10px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, rgba(0,0,0,0) 70%); pointer-events: none;"
-          >
-          </div>
-          <span
-            style="font-family: monospace; font-size: 0.8rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;"
-            >{categoryLabel}</span
-          >
-          <h1
-            style="font-size: 2.25rem; font-weight: 800; color: #ffffff; margin: 0.5rem 0; letter-spacing: -0.02em;"
-          >
-            {doc.title}
-          </h1>
-          <p
-            style="font-size: 1rem; color: #94a3b8; margin: 0; line-height: 1.6;"
-          >
-            {doc.description}
-          </p>
+    <div class="main-grid">
+      <div class="left-panel">
+        <header class="panel-header">
+          <div class="glow-effect"></div>
+          <span class="category-badge">{categoryLabel}</span>
+          <h1 class="api-main-title">{doc.title}</h1>
+          <p class="api-main-desc">{doc.description}</p>
         </header>
 
-        <!-- Section Endpoint -->
-        <section>
-          <h2
-            style="font-size: 1rem; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;"
-          >
-            <span
-              style="width: 3px; height: 12px; background: #10b981; border-radius: 2px;"
-            ></span> HTTP Request
+        <section class="section-block">
+          <h2 class="panel-section-title">
+            <span class="title-indicator"></span> HTTP Request
           </h2>
-          <div
-            class="endpoint-card"
-            style={`display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: #0b0f19; border: 1px solid #1f2937; border-radius: 12px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);`}
-          >
+
+          <div class="endpoint-card-wrapper">
             <span
               class={`badge badge-${doc.method?.toLowerCase()}`}
-              style={`font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 6px; background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder}; min-width: 50px; text-align: center; letter-spacing: 0.05em;`}
+              style={`background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder};`}
             >
               {doc.method}
             </span>
-            <code
-              style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: #e2e8f0; font-weight: 600; word-break: break-all;"
+
+            <div class="scrollable-wrapper custom-scrollbar">
+              <code class="code-text-highlight">{doc.endpoint}</code>
+            </div>
+
+            <button
+              class="native-copy-trigger"
+              data-raw-copy={doc.endpoint}
+              title="Copy Endpoint"
             >
-              {doc.endpoint}
-            </code>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
+                ></rect><path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                ></path></svg
+              >
+              <span class="state-txt">Copy</span>
+            </button>
           </div>
         </section>
 
-        <!-- Informasi Tambahan Opsional (Meta data API) -->
-        <section
-          style="background: rgba(17, 24, 39, 0.5); border: 1px solid #1f2937; border-radius: 12px; padding: 1.25rem;"
-        >
-          <div
-            style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; font-family: monospace;"
-          >
+        <section class="meta-info-card">
+          <div class="meta-flex-row">
             <span
               >AUTHENTICATION: <span style="color: #f59e0b;">NONE</span></span
             >
@@ -158,68 +161,499 @@ const methodBorder = isGet
         </section>
       </div>
 
-      <!-- KOLOM KANAN: Playground & Code Blocks -->
-      <div
-        class="right-panel"
-        style="display: flex; flex-direction: column; gap: 2rem;"
-      >
-        <!-- Tab 1: Request Shell / Curl (Try It) -->
-        <div
-          style="background: #090d16; border: 1px solid #1f2937; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);"
-        >
-          <div
-            style="background: #0f172a; padding: 0.75rem 1.25rem; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between;"
-          >
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <span
-                style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; font-family: monospace;"
-                >REQUEST EXAMPLE</span
-              >
+      <div class="right-panel">
+        <div class="code-container-block">
+          <div class="code-block-header menu-tabs-header">
+            <div class="tabs-buttons-container">
+              <button class="tab-btn active" data-tab="curl">cURL</button>
+              <button class="tab-btn" data-tab="javascript">JavaScript</button>
+              <button class="tab-btn" data-tab="python">Python</button>
+              <button class="tab-btn" data-tab="php">PHP</button>
             </div>
-            <span
-              style="font-size: 0.70rem; color: #64748b; background: #030712; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace;"
-              >cURL</span
+          </div>
+
+          <div
+            class="code-viewport-area custom-scrollbar language-tabs-content"
+          >
+            <div
+              class="tab-content active"
+              id="tab-curl"
+              data-raw={snippets.curl}
             >
+              <Code code={snippets.curl} lang="bash" theme="github-dark" />
+            </div>
+            <div
+              class="tab-content"
+              id="tab-javascript"
+              data-raw={snippets.javascript}
+            >
+              <Code code={snippets.javascript} lang="js" theme="github-dark" />
+            </div>
+            <div class="tab-content" id="tab-python" data-raw={snippets.python}>
+              <Code code={snippets.python} lang="py" theme="github-dark" />
+            </div>
+            <div class="tab-content" id="tab-php" data-raw={snippets.php}>
+              <Code code={snippets.php} lang="php" theme="github-dark" />
+            </div>
           </div>
-          <div style="padding: 1.25rem; overflow-x: auto; background: #070a12;">
-            <pre
-              style="margin: 0;"><code style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #38bdf8; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">curl -X {doc.method} https://muhiqsimui.github.io{base}{doc.endpoint.replace(/^\//, "")}</code></pre>
-          </div>
+
+          <button
+            class="native-copy-trigger"
+            id="copy-request-btn"
+            title="Copy Code"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
+              ></rect><path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path></svg
+            >
+            <span class="state-txt">Copy</span>
+          </button>
         </div>
 
-        <!-- Tab 2: Response JSON Block -->
-        <div
-          style="background: #090d16; border: 1px solid #1f2937; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);"
-        >
+        <div class="code-container-block">
+          <div class="code-block-header">
+            <span class="block-title-text">RESPONSE BODY</span>
+            <span class="status-tag">200 OK</span>
+          </div>
           <div
-            style="background: #0f172a; padding: 0.75rem 1.25rem; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between;"
+            class="code-viewport-area max-height-json custom-scrollbar"
+            id="json-response-pane"
+            data-raw={jsonString}
           >
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <span
-                style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; font-family: monospace;"
-                >RESPONSE BODY</span
-              >
-            </div>
-            <span
-              style="font-size: 0.70rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace; font-weight: 600;"
-              >200 OK</span
+            <Code code={jsonString} lang="json" theme="github-dark" />
+          </div>
+
+          <button
+            class="native-copy-trigger"
+            id="copy-json-btn"
+            title="Copy JSON Response"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
+              ></rect><path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path></svg
             >
-          </div>
-          <div
-            style="padding: 1.25rem; max-height: 400px; overflow-y: auto; background: #070a12;"
-            class="custom-scrollbar"
-          >
-            <pre
-              style="margin: 0;"><code style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #a7f3d0; line-height: 1.6; white-space: pre;">{JSON.stringify(exampleResponse, null, 2)}</code></pre>
-          </div>
+            <span class="state-txt">Copy</span>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </BaseLayout>
 
-<style>
-  /* Responsive breakpoint untuk desktop: otomatis pecah 2 kolom kalau layar lebar */
+<script is:inline data-astro-rerun>
+  (function () {
+    // 1. LOGIK TAB SWITCHER
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetTab = btn.getAttribute("data-tab");
+
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        tabContents.forEach((c) => c.classList.remove("active"));
+
+        btn.classList.add("active");
+        document.getElementById(`tab-${targetTab}`).classList.add("active");
+      });
+    });
+
+    // 2. LOGIK GLOBAL COPY
+    document.querySelectorAll(".native-copy-trigger").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        let textToCopy = "";
+
+        const directText = btn.getAttribute("data-raw-copy");
+        if (directText) {
+          textToCopy = directText;
+        } else if (btn.id === "copy-request-btn") {
+          const activeTab = document.querySelector(".tab-content.active");
+          if (activeTab) textToCopy = activeTab.getAttribute("data-raw");
+        } else if (btn.id === "copy-json-btn") {
+          const jsonPane = document.getElementById("json-response-pane");
+          if (jsonPane) textToCopy = jsonPane.getAttribute("data-raw");
+        }
+
+        if (!textToCopy) return;
+
+        navigator.clipboard
+          .writeText(textToCopy)
+          .then(() => {
+            const textNode = btn.querySelector(".state-txt");
+            btn.classList.add("copied-success");
+            if (textNode) textNode.innerText = "COPIED";
+
+            setTimeout(() => {
+              btn.classList.remove("copied-success");
+              if (textNode) textNode.innerText = "Copy";
+            }, 2000);
+          })
+          .catch((err) => console.error("Err copy:", err));
+      });
+    });
+
+    // 3. ANIMASI MATRIX 3D NEON BLUE
+    const canvas = document.getElementById("matrix-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZコンニチハ";
+    const numParticles = 120;
+    const particles = [];
+
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * width - width / 2,
+        y: Math.random() * height - height / 2,
+        z: Math.random() * 1000,
+        char: chars[Math.floor(Math.random() * chars.length)],
+        speed: 4 + Math.random() * 6,
+      });
+    }
+
+    function drawMatrix3D() {
+      ctx.fillStyle = "rgba(3, 7, 18, 0.15)";
+      ctx.fillRect(0, 0, width, height);
+
+      const cx = width / 2;
+      const cy = height / 2;
+
+      for (let i = 0; i < numParticles; i++) {
+        let p = particles[i];
+        p.z -= p.speed;
+
+        if (p.z <= 0) {
+          p.z = 1000;
+          p.x = Math.random() * width - width / 2;
+          p.y = Math.random() * height - height / 2;
+        }
+
+        const k = 400 / p.z;
+        const px = p.x * k + cx;
+        const py = p.y * k + cy;
+
+        if (px >= 0 && px <= width && py >= 0 && py <= height) {
+          const size = Math.max(k * 4, 8);
+          const alpha = Math.min((1000 - p.z) / 800, 1);
+
+          ctx.font = `bold ${size}px monospace`;
+          ctx.shadowBlur = size / 2;
+          ctx.shadowColor = "#00d2ff";
+          ctx.fillStyle = `rgba(0, 210, 255, ${alpha})`;
+          ctx.fillText(p.char, px, py);
+
+          if (Math.random() < 0.05) {
+            p.char = chars[Math.floor(Math.random() * chars.length)];
+          }
+        }
+      }
+      ctx.shadowBlur = 0;
+      requestAnimationFrame(drawMatrix3D);
+    }
+    drawMatrix3D();
+  })();
+</script>
+
+<style is:global>
+  /* Tambahan Style untuk Sistem Tab Bahasa */
+  .menu-tabs-header {
+    padding: 0 !important;
+  }
+  .tabs-buttons-container {
+    display: flex;
+    gap: 4px;
+    padding: 6px 12px 0 12px;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .tab-btn:hover {
+    color: #e2e8f0;
+  }
+  .tab-btn.active {
+    color: #00d2ff;
+    border-bottom: 2px solid #00d2ff;
+    background: rgba(0, 210, 255, 0.05);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Override default style pre dari Shiki agar menyatu dengan wrapper UI */
+  .code-viewport-area pre {
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .code-viewport-area code {
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* Base Styles */
+  #matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #030712;
+  }
+  .api-slug-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: "Inter", system-ui, sans-serif;
+    color: #e2e8f0;
+    box-sizing: border-box;
+    z-index: 1;
+  }
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    width: 100%;
+    min-width: 0;
+  }
+  .left-panel,
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    min-width: 0;
+  }
+  .endpoint-card-wrapper {
+    position: relative !important;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 6rem 1rem 1.25rem !important;
+    background: rgba(11, 15, 25, 0.8) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  .code-container-block {
+    position: relative !important;
+    background: rgba(9, 13, 22, 0.85) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    width: 100%;
+  }
+  .native-copy-trigger {
+    position: absolute !important;
+    top: 0.65rem !important;
+    right: 0.75rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    background: #1e293b !important;
+    border: 1px solid #475569 !important;
+    border-radius: 6px !important;
+    color: #cbd5e1 !important;
+    font-family: inherit;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    padding: 0.3rem 0.6rem !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    z-index: 80 !important;
+  }
+  .endpoint-card-wrapper .native-copy-trigger {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    right: 0.75rem !important;
+  }
+  .native-copy-trigger:hover {
+    background: #334155 !important;
+    border-color: #00d2ff !important;
+    color: #ffffff !important;
+  }
+  .native-copy-trigger.copied-success {
+    background: rgba(0, 210, 255, 0.15) !important;
+    border-color: #00d2ff !important;
+    color: #00d2ff !important;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background: rgba(11, 15, 25, 0.8);
+    border: 1px solid #1f2937;
+    border-radius: 9999px;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .back-link:hover {
+    color: #00d2ff !important;
+    border-color: #00d2ff !important;
+  }
+  .panel-header {
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 2rem;
+    position: relative;
+  }
+  .category-badge {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #00d2ff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .api-main-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0.5rem 0;
+    letter-spacing: -0.02em;
+  }
+  .api-main-desc {
+    font-size: 1rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .panel-section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .title-indicator {
+    width: 3px;
+    height: 12px;
+    background: #00d2ff;
+    border-radius: 2px;
+  }
+  .badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    min-width: 50px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .scrollable-wrapper {
+    overflow-x: auto !important;
+    width: 100%;
+    display: block;
+  }
+  .code-text-highlight {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.95rem;
+    color: #e2e8f0;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .meta-info-card {
+    background: rgba(17, 24, 39, 0.4);
+    backdrop-filter: blur(4px);
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .meta-flex-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-family: monospace;
+  }
+  .code-block-header {
+    background: #0f172a;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid #1f2937;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .block-title-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    font-family: monospace;
+  }
+  .status-tag {
+    font-size: 0.7rem;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: 600;
+    margin-right: 5rem;
+  }
+  .code-viewport-area {
+    padding: 1.25rem;
+    overflow-x: auto !important;
+    background: rgba(7, 10, 18, 0.9);
+  }
+  .max-height-json {
+    max-height: 400px;
+    overflow-y: auto !important;
+  }
+
   @media (min-width: 968px) {
     .main-grid {
       grid-template-columns: 55% 45% !important;
@@ -230,18 +664,16 @@ const methodBorder = isGet
       top: 2rem;
     }
   }
-
-  /* Custom styling scrollbar dalam terminal json response agar estetik */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: #070a12;
+    background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #1f2937;
-    border-radius: 3px;
+    border-radius: 10px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #374151;

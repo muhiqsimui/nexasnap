@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 export interface Props {
   title?: string;
   description?: string;
@@ -15,6 +17,7 @@ const base = import.meta.env.BASE_URL;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <ClientRouter fallback="swap" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -66,7 +69,7 @@ const base = import.meta.env.BASE_URL;
       </div>
     </nav>
 
-    <main>
+    <main class="main-content-wrapper">
       <slot />
     </main>
 
@@ -88,9 +91,9 @@ const base = import.meta.env.BASE_URL;
     --border-hover: #374151;
     --text: #f8fafc;
     --text-muted: #64748b;
-    --accent: #06b6d4; /* Diubah ke Cyber Cyan */
-    --accent-hover: #22d3ee; /* Diubah ke Light Cyan */
-    --blue-crypto: #38bdf8; /* Neon Blue */
+    --accent: #06b6d4;
+    --accent-hover: #22d3ee;
+    --blue-crypto: #38bdf8;
   }
 
   * {
@@ -182,13 +185,22 @@ const base = import.meta.env.BASE_URL;
     background: rgba(6, 182, 212, 0.05);
   }
 
-  /* Jarak aman main content */
-  main {
+  /* FIX: Mengubah main menjadi container fluid yang aman agar tidak memotong layout halaman API */
+  main.main-content-wrapper {
     flex: 1;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0; /* Padding dilepas dari main, biarkan diatur oleh halaman masing-masing */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* FIX: Agar halaman lama (Home/Docs list) tidak berantakan akibat perubahan main, kita buat pembungkus otomatis jika di luar halaman full-width */
+  main.main-content-wrapper > *:not(.api-docs-wrapper) {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 1.5rem !important;
+    padding: 2rem 1.5rem;
   }
 
   /* HTML Tag Standard Overrides */
@@ -210,7 +222,8 @@ const base = import.meta.env.BASE_URL;
     letter-spacing: -0.02em;
   }
 
-  pre {
+  /* FIX: Mencegah selektor global merusak pre di dalam matrix card */
+  main.main-content-wrapper > *:not(.api-docs-wrapper) pre {
     background: #070a12;
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -218,19 +231,16 @@ const base = import.meta.env.BASE_URL;
     overflow-x: auto;
   }
 
-  code {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-    font-size: 0.85em;
+  /* FIX: Aturan tag code standar agar tidak menimpa skema font kode API Docs kamu */
+  main.main-content-wrapper > *:not(.api-docs-wrapper) code {
     background: var(--surface);
     padding: 0.2em 0.4em;
     border-radius: 6px;
     color: #e2e8f0;
   }
 
-  pre code {
-    background: none;
-    padding: 0;
-    color: inherit;
+  code {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
   }
 
   hr {
@@ -263,7 +273,6 @@ const base = import.meta.env.BASE_URL;
     text-transform: uppercase;
   }
 
-  /* Menyelaraskan warna badge GET menjadi biru cyan transparan */
   .badge-get {
     background: rgba(6, 182, 212, 0.1);
     color: var(--accent);
