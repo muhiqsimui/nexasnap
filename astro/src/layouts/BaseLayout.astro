@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
 
 export interface Props {
   title?: string;
@@ -28,318 +29,88 @@ const base = import.meta.env.BASE_URL;
 
     <title>{title} — NexaSnap</title>
   </head>
-  <body>
-    <nav class="navbar">
-      <a href={base} class="nav-brand">
-        <img
-          src={`${base}/assets/nexasnap-logo.webp`}
-          alt="NexaSnap Logo"
-          width="24"
-          height="24"
-          style="object-fit: contain; border-radius: 4px;"
-          onerror="this.style.display='none'"
-        />
-        <span>NexaSnap</span>
-      </a>
-      <div class="nav-links">
-        <a href={base}>Home</a>
-        <a href={`${base}/docs`}>Docs</a>
+  <body class="min-h-screen flex flex-col">
+    <div class="fixed top-0 z-50 w-full px-4 pt-3 sm:pt-4">
+      <nav
+        class="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]"
+      >
         <a
-          href="https://github.com/muhiqsimui/nexasnap"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="github-btn"
+          href={base}
+          class="flex items-center gap-2 font-extrabold text-base sm:text-lg text-white no-underline tracking-tight group"
         >
-          GitHub
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-            ></path><polyline points="15 3 21 3 21 9"></polyline><line
-              x1="10"
-              y1="14"
-              x2="21"
-              y2="3"></line></svg
+          <div
+            class="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center"
+          >
+            <img
+              src={`${base}/assets/nexasnap-logo.webp`}
+              alt="NexaSnap Logo Core"
+              class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.6)] animate-float transition-transform duration-300 group-hover:scale-105"
+              onerror="this.style.display='none'"
+            />
+          </div>
+          <span
+            class="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent"
+            >NexaSnap</span
           >
         </a>
-      </div>
-    </nav>
 
-    <main class="main-content-wrapper">
+        <div class="flex items-center gap-4 sm:gap-6">
+          <a
+            href={base}
+            class="text-white/70 hover:text-white no-underline text-sm font-medium transition-all duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-cyan-400 after:transition-all hover:after:w-full"
+          >
+            Home
+          </a>
+          <a
+            href={`${base}/docs`}
+            class="text-white/70 hover:text-white no-underline text-sm font-medium transition-all duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-cyan-400 after:transition-all hover:after:w-full"
+          >
+            Docs
+          </a>
+
+          <a
+            href="https://github.com/muhiqsimui/nexasnap"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl text-white/90 hover:text-white no-underline text-xs sm:text-sm font-medium transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
+          >
+            <span class="hidden xs:inline">GitHub</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-github"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"
+              ></path>
+            </svg>
+            Github
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <main class="flex-1 w-full mx-auto">
       <slot />
     </main>
 
-    <footer class="footer">
+    <footer class="text-center py-8 sm:py-10 px-4 border-t border-border">
       <style>
-        /* Animasi gerak gradasi background */
-        @keyframes gradientMove {
-          0% {
-            background-position: 0% center;
-          }
-          50% {
-            background-position: 100% center;
-          }
-          100% {
-            background-position: 0% center;
-          }
-        }
-        /* Efek hover yang tidak bisa di-inline */
         .hover-scale:hover {
           transform: scale(1.1);
         }
       </style>
-
       <a
-        href="https://www.skills.web.id"
+        href="mailto:muhiqsimui@gmail.com"
         rel="sponsored"
         target="_blank"
-        class="hover-scale"
-        style="
-    position: relative;
-    font-weight: 900;
-    background: linear-gradient(to right, #67e8f9, #dbeafe, #67e8f9);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-size: 18px;
-    letter-spacing: 0.3em;
-    display: block;
-    background-size: 200% auto;
-    animation: gradientMove 3s linear infinite;
-    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  "
+        class="hover-scale inline-block font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-100 to-cyan-300 text-sm sm:text-lg tracking-widest animate-gradient-move transition-transform duration-300 no-underline"
       >
-        BUILD YOUR DREAM WEBSITE ON SKILLS.WEB.ID
+        CONTACT DEVELOPER ✉︎
       </a>
     </footer>
   </body>
 </html>
-
-<style is:global>
-  @keyframes gradientMove {
-    0% {
-      background-position: 0% center;
-    }
-    50% {
-      background-position: 100% center;
-    }
-    100% {
-      background-position: 0% center;
-    }
-  }
-  /* Sinkronisasi Token Warna Menjadi Cyber Cyan / Neon Blue */
-  :root {
-    --bg: #030712;
-    --surface: #0b0f19;
-    --surface-hover: #111827;
-    --border: #1f2937;
-    --border-hover: #374151;
-    --text: #f8fafc;
-    --text-muted: #64748b;
-    --accent: #06b6d4;
-    --accent-hover: #22d3ee;
-    --blue-crypto: #38bdf8;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family:
-      "Inter",
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Navbar styling modern dengan Flexbox Paksa */
-  .navbar {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 1rem 2rem !important;
-    border-bottom: 1px solid var(--border);
-    background: rgba(3, 7, 18, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1000 !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  .nav-brand {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 0.6rem !important;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: var(--text) !important;
-    text-decoration: none !important;
-    letter-spacing: -0.02em;
-  }
-
-  .nav-links {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 1.5rem !important;
-  }
-
-  .nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-  }
-
-  .nav-links a:hover {
-    color: var(--text);
-  }
-
-  .nav-links .github-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.4rem 0.8rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text-muted);
-  }
-
-  .nav-links .github-btn:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: rgba(6, 182, 212, 0.05);
-  }
-
-  /* FIX: Mengubah main menjadi container fluid yang aman agar tidak memotong layout halaman API */
-  main.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0; /* Padding dilepas dari main, biarkan diatur oleh halaman masing-masing */
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* FIX: Agar halaman lama (Home/Docs list) tidak berantakan akibat perubahan main, kita buat pembungkus otomatis jika di luar halaman full-width */
-  main.main-content-wrapper > *:not(.api-docs-wrapper) {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
-
-  /* HTML Tag Standard Overrides */
-  a {
-    color: var(--accent);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-
-  a:hover {
-    color: var(--accent-hover);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-
-  /* FIX: Mencegah selektor global merusak pre di dalam matrix card */
-  main.main-content-wrapper > *:not(.api-docs-wrapper) pre {
-    background: #070a12;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    overflow-x: auto;
-  }
-
-  /* FIX: Aturan tag code standar agar tidak menimpa skema font kode API Docs kamu */
-  main.main-content-wrapper > *:not(.api-docs-wrapper) code {
-    background: var(--surface);
-    padding: 0.2em 0.4em;
-    border-radius: 6px;
-    color: #e2e8f0;
-  }
-
-  code {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-  }
-
-  hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 2.5rem 0;
-  }
-
-  /* Aturan Global Komponen */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .card:hover {
-    border-color: var(--border-hover);
-    background: var(--surface-hover);
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 0.25rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-family: "JetBrains Mono", monospace;
-    text-transform: uppercase;
-  }
-
-  .badge-get {
-    background: rgba(6, 182, 212, 0.1);
-    color: var(--accent);
-    border: 1px solid rgba(6, 182, 212, 0.2);
-  }
-
-  .meta {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-  }
-
-  .footer {
-    text-align: center;
-    padding: 2.5rem;
-    border-top: 1px solid var(--border);
-    color: #fafafd;
-    font-size: 0.75rem;
-    font-family: "JetBrains Mono", monospace;
-    letter-spacing: 0.05em;
-  }
-</style>

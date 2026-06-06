@@ -3,7 +3,6 @@ import fs from "node:fs";
 import path from "node:path";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { url } from "../../../lib/url";
-// Import komponen Code bawaan Astro untuk syntax highlighting otomatis
 import { Code } from "astro:components";
 
 const base = import.meta.env.BASE_URL;
@@ -21,14 +20,8 @@ export async function getStaticPaths() {
     const exampleResponse = JSON.parse(fs.readFileSync(apiFile, "utf-8"));
 
     return {
-      params: {
-        category: doc.category,
-        slug: doc.slug,
-      },
-      props: {
-        doc,
-        exampleResponse,
-      },
+      params: { category: doc.category, slug: doc.slug },
+      props: { doc, exampleResponse },
     };
   });
 }
@@ -50,38 +43,29 @@ const methodBorder = isGet
 
 const fullUrl = `https://muhiqsimui.github.io${base}${doc.endpoint.replace(/^\//, "")}`;
 
-// Generate Snippets untuk beberapa bahasa pemrograman
 const snippets = {
   curl: `curl -X ${doc.method} "${fullUrl}"`,
-  javascript: `fetch("${fullUrl}", {
-  method: "${doc.method}"
-})
-  .then(res => res.json())
-  .then(data => console.log(data));`,
-  python: `import requests
-
-url = "${fullUrl}"
-response = requests.${doc.method?.toLowerCase()}(url)
-print(response.json())`,
-  php: `<?php
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "${fullUrl}");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "${doc.method}");
-$response = curl_exec($ch);
-curl_close($ch);
-$data = json_decode($response, true);
-?>`,
+  javascript: `fetch("${fullUrl}", {\n  method: "${doc.method}"\n})\n  .then(res => res.json())\n  .then(data => console.log(data));`,
+  python: `import requests\n\nurl = "${fullUrl}"\nresponse = requests.${doc.method?.toLowerCase()}(url)\nprint(response.json())`,
+  php: `<?php\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, "${fullUrl}");\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, "${doc.method}");\n$response = curl_exec($ch);\ncurl_close($ch);\n$data = json_decode($response, true);\n?>`,
 };
 
 const jsonString = JSON.stringify(exampleResponse, null, 2);
 ---
 
 <BaseLayout title={doc.title} description={doc.description}>
-  <canvas id="matrix-canvas"></canvas>
+  <canvas
+    id="matrix-canvas"
+    class="fixed inset-0 w-screen h-screen -z-10 pointer-events-none bg-bg"
+  ></canvas>
 
-  <div class="api-slug-container">
-    <a href={url(base, "/docs")} class="back-link">
+  <div
+    class="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-8 font-sans text-slate-200 box-border"
+  >
+    <a
+      href={url(base, "/docs")}
+      class="back-link inline-flex items-center gap-2 text-slate-400 no-underline text-xs sm:text-sm font-medium mb-4 sm:mb-8 px-3 sm:px-4 py-2 bg-surface/80 border border-border rounded-full hover:text-cyan-400 hover:border-cyan-400 transition-all backdrop-blur"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="14"
@@ -92,40 +76,56 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
         stroke-width="2.5"
         stroke-linecap="round"
         stroke-linejoin="round"
-        ><line x1="19" y1="12" x2="5" y2="12"></line><polyline
-          points="12 19 5 12 12 5"></polyline></svg
       >
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
       Back to Docs
     </a>
 
-    <div class="main-grid">
-      <div class="left-panel">
-        <header class="panel-header">
-          <div class="glow-effect"></div>
-          <span class="category-badge">{categoryLabel}</span>
-          <h1 class="api-main-title">{doc.title}</h1>
-          <p class="api-main-desc">{doc.description}</p>
+    <div class="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 sm:gap-10">
+      <div class="flex flex-col gap-6 sm:gap-10 min-w-0">
+        <header class="border-b border-border pb-4 sm:pb-8 relative">
+          <span
+            class="font-mono text-xs sm:text-sm text-cyan-400 font-bold uppercase tracking-wider"
+            >{categoryLabel}</span
+          >
+          <h1
+            class="text-xl sm:text-4xl font-extrabold text-white my-2 sm:my-3 tracking-tight"
+          >
+            {doc.title}
+          </h1>
+          <p class="text-sm sm:text-base text-slate-400 m-0 leading-relaxed">
+            {doc.description}
+          </p>
         </header>
 
-        <section class="section-block">
-          <h2 class="panel-section-title">
-            <span class="title-indicator"></span> HTTP Request
+        <section>
+          <h2
+            class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2"
+          >
+            <span class="w-0.5 h-3 bg-cyan-400 rounded-sm"></span> HTTP Request
           </h2>
 
-          <div class="endpoint-card-wrapper">
+          <div
+            class="relative flex items-center gap-2 sm:gap-4 p-3 sm:p-5 pr-10 sm:pr-24 bg-surface/80 backdrop-blur border border-border rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] flex-wrap sm:flex-nowrap"
+          >
             <span
-              class={`badge badge-${doc.method?.toLowerCase()}`}
+              class="font-mono text-[0.6rem] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-center tracking-wider shrink-0"
               style={`background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder};`}
             >
               {doc.method}
             </span>
 
-            <div class="scrollable-wrapper custom-scrollbar">
-              <code class="code-text-highlight">{doc.endpoint}</code>
+            <div class="overflow-x-auto w-full sm:w-auto flex-1 min-w-0">
+              <code
+                class="font-mono text-xs sm:text-base text-slate-200 font-semibold whitespace-nowrap"
+                >{doc.endpoint}</code
+              >
             </div>
 
             <button
-              class="native-copy-trigger"
+              class="native-copy-trigger absolute top-1/2 -translate-y-1/2 right-2 sm:right-3 inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
               data-raw-copy={doc.endpoint}
               title="Copy Endpoint"
             >
@@ -137,23 +137,32 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2.5"
-                ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
-                ></rect><path
-                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                ></path></svg
               >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                ></path>
+              </svg>
               <span class="state-txt">Copy</span>
             </button>
+            <a
+              href={base + doc.endpoint}
+              class="border-2 border-green-400 w-20 h-6 flex items-center justify-center text-sm rounded-2xl hover:bg-green-950"
+              target="_blank">Check</a
+            >
           </div>
         </section>
 
-        <section class="meta-info-card">
-          <div class="meta-flex-row">
-            <span
-              >AUTHENTICATION: <span style="color: #f59e0b;">NONE</span></span
+        <section
+          class="bg-[rgba(17,24,39,0.4)] backdrop-blur border border-border rounded-xl p-4 sm:p-5"
+        >
+          <div
+            class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 font-mono"
+          >
+            <span>AUTHENTICATION: <span class="text-amber-500">NONE</span></span
             >
             <span
-              >CONTENT-TYPE: <span style="color: #10b981;"
+              >CONTENT-TYPE: <span class="text-emerald-500"
                 >APPLICATION/JSON</span
               ></span
             >
@@ -161,20 +170,32 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
         </section>
       </div>
 
-      <div class="right-panel">
-        <div class="code-container-block">
-          <div class="code-block-header menu-tabs-header">
-            <div class="tabs-buttons-container">
-              <button class="tab-btn active" data-tab="curl">cURL</button>
-              <button class="tab-btn" data-tab="javascript">JavaScript</button>
-              <button class="tab-btn" data-tab="python">Python</button>
-              <button class="tab-btn" data-tab="php">PHP</button>
+      <div class="flex flex-col gap-4 sm:gap-6 lg:sticky lg:top-8 min-w-0">
+        <div
+          class="relative bg-[rgba(9,13,22,0.85)] backdrop-blur border border-border rounded-2xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)] w-full"
+        >
+          <div class="bg-slate-900 border-b border-border p-0">
+            <div class="flex gap-1 px-2 sm:px-3 pt-1.5 sm:pt-2 overflow-x-auto">
+              <button
+                class="tab-btn active text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                data-tab="curl">cURL</button
+              >
+              <button
+                class="tab-btn text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                data-tab="javascript">JavaScript</button
+              >
+              <button
+                class="tab-btn text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                data-tab="python">Python</button
+              >
+              <button
+                class="tab-btn text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                data-tab="php">PHP</button
+              >
             </div>
           </div>
 
-          <div
-            class="code-viewport-area custom-scrollbar language-tabs-content"
-          >
+          <div class="p-3 sm:p-5 overflow-x-auto bg-[rgba(7,10,18,0.9)]">
             <div
               class="tab-content active"
               id="tab-curl"
@@ -183,22 +204,30 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
               <Code code={snippets.curl} lang="bash" theme="github-dark" />
             </div>
             <div
-              class="tab-content"
+              class="tab-content hidden"
               id="tab-javascript"
               data-raw={snippets.javascript}
             >
               <Code code={snippets.javascript} lang="js" theme="github-dark" />
             </div>
-            <div class="tab-content" id="tab-python" data-raw={snippets.python}>
+            <div
+              class="tab-content hidden"
+              id="tab-python"
+              data-raw={snippets.python}
+            >
               <Code code={snippets.python} lang="py" theme="github-dark" />
             </div>
-            <div class="tab-content" id="tab-php" data-raw={snippets.php}>
+            <div
+              class="tab-content hidden"
+              id="tab-php"
+              data-raw={snippets.php}
+            >
               <Code code={snippets.php} lang="php" theme="github-dark" />
             </div>
           </div>
 
           <button
-            class="native-copy-trigger"
+            class="native-copy-trigger absolute top-2 sm:top-3 right-2 sm:right-3 inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
             id="copy-request-btn"
             title="Copy Code"
           >
@@ -210,22 +239,32 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
               fill="none"
               stroke="currentColor"
               stroke-width="2.5"
-              ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
-              ></rect><path
-                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-              ></path></svg
             >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path>
+            </svg>
             <span class="state-txt">Copy</span>
           </button>
         </div>
 
-        <div class="code-container-block">
-          <div class="code-block-header">
-            <span class="block-title-text">RESPONSE BODY</span>
-            <span class="status-tag">200 OK</span>
+        <div
+          class="relative bg-[rgba(9,13,22,0.85)] backdrop-blur border border-border rounded-2xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)] w-full"
+        >
+          <div
+            class="bg-slate-900 px-3 sm:px-5 py-2 sm:py-3 border-b border-border flex items-center justify-start gap-5"
+          >
+            <span
+              class="text-[0.6rem] sm:text-xs font-bold text-slate-400 font-mono"
+              >RESPONSE BODY</span
+            >
+            <span
+              class="text-[0.55rem] sm:text-[0.65rem] text-emerald-500 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded font-mono font-semibold mr-2 sm:mr-12"
+              >200 OK</span
+            >
           </div>
           <div
-            class="code-viewport-area max-height-json custom-scrollbar"
+            class="p-3 sm:p-5 overflow-x-auto bg-[rgba(7,10,18,0.9)] max-h-60 sm:max-h-80 overflow-y-auto custom-scrollbar"
             id="json-response-pane"
             data-raw={jsonString}
           >
@@ -233,7 +272,7 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
           </div>
 
           <button
-            class="native-copy-trigger"
+            class="native-copy-trigger absolute top-2 sm:top-3 right-2 sm:right-3 inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
             id="copy-json-btn"
             title="Copy JSON Response"
           >
@@ -245,11 +284,11 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
               fill="none"
               stroke="currentColor"
               stroke-width="2.5"
-              ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
-              ></rect><path
-                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-              ></path></svg
             >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path>
+            </svg>
             <span class="state-txt">Copy</span>
           </button>
         </div>
@@ -259,50 +298,53 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
 </BaseLayout>
 
 <script is:inline data-astro-rerun>
-  (function () {
-    // 1. LOGIK TAB SWITCHER
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    const tabContents = document.querySelectorAll(".tab-content");
-
-    tabButtons.forEach((btn) => {
+  (() => {
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const targetTab = btn.getAttribute("data-tab");
-
-        tabButtons.forEach((b) => b.classList.remove("active"));
-        tabContents.forEach((c) => c.classList.remove("active"));
-
+        document.querySelectorAll(".tab-btn").forEach((b) => {
+          b.classList.remove("active");
+          b.style.color = "";
+          b.style.borderBottomColor = "transparent";
+          b.style.background = "transparent";
+        });
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((c) => c.classList.add("hidden"));
         btn.classList.add("active");
-        document.getElementById(`tab-${targetTab}`).classList.add("active");
+        btn.style.color = "#00d2ff";
+        btn.style.borderBottomColor = "#00d2ff";
+        btn.style.background = "rgba(0, 210, 255, 0.05)";
+        document.getElementById(`tab-${targetTab}`).classList.remove("hidden");
       });
     });
 
-    // 2. LOGIK GLOBAL COPY
     document.querySelectorAll(".native-copy-trigger").forEach((btn) => {
       btn.addEventListener("click", () => {
         let textToCopy = "";
-
         const directText = btn.getAttribute("data-raw-copy");
         if (directText) {
           textToCopy = directText;
         } else if (btn.id === "copy-request-btn") {
-          const activeTab = document.querySelector(".tab-content.active");
+          const activeTab = document.querySelector(".tab-content:not(.hidden)");
           if (activeTab) textToCopy = activeTab.getAttribute("data-raw");
         } else if (btn.id === "copy-json-btn") {
           const jsonPane = document.getElementById("json-response-pane");
           if (jsonPane) textToCopy = jsonPane.getAttribute("data-raw");
         }
-
         if (!textToCopy) return;
-
         navigator.clipboard
           .writeText(textToCopy)
           .then(() => {
             const textNode = btn.querySelector(".state-txt");
-            btn.classList.add("copied-success");
+            btn.style.background = "rgba(0, 210, 255, 0.15)";
+            btn.style.borderColor = "#00d2ff";
+            btn.style.color = "#00d2ff";
             if (textNode) textNode.innerText = "COPIED";
-
             setTimeout(() => {
-              btn.classList.remove("copied-success");
+              btn.style.background = "";
+              btn.style.borderColor = "";
+              btn.style.color = "";
               if (textNode) textNode.innerText = "Copy";
             }, 2000);
           })
@@ -310,10 +352,10 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
       });
     });
 
-    // 3. ANIMASI MATRIX 3D NEON BLUE
     const canvas = document.getElementById("matrix-canvas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    let animId;
 
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
@@ -324,7 +366,7 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
     });
 
     const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZコンニチハ";
-    const numParticles = 120;
+    const numParticles = 80;
     const particles = [];
 
     for (let i = 0; i < numParticles; i++) {
@@ -333,11 +375,11 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
         y: Math.random() * height - height / 2,
         z: Math.random() * 1000,
         char: chars[Math.floor(Math.random() * chars.length)],
-        speed: 4 + Math.random() * 6,
+        speed: 3 + Math.random() * 5,
       });
     }
 
-    function drawMatrix3D() {
+    function draw() {
       ctx.fillStyle = "rgba(3, 7, 18, 0.15)";
       ctx.fillRect(0, 0, width, height);
 
@@ -345,9 +387,8 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
       const cy = height / 2;
 
       for (let i = 0; i < numParticles; i++) {
-        let p = particles[i];
+        const p = particles[i];
         p.z -= p.speed;
-
         if (p.z <= 0) {
           p.z = 1000;
           p.x = Math.random() * width - width / 2;
@@ -357,312 +398,43 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
         const k = 400 / p.z;
         const px = p.x * k + cx;
         const py = p.y * k + cy;
-
         if (px >= 0 && px <= width && py >= 0 && py <= height) {
-          const size = Math.max(k * 4, 8);
+          const size = Math.max(k * 3, 6);
           const alpha = Math.min((1000 - p.z) / 800, 1);
-
           ctx.font = `bold ${size}px monospace`;
           ctx.shadowBlur = size / 2;
           ctx.shadowColor = "#00d2ff";
           ctx.fillStyle = `rgba(0, 210, 255, ${alpha})`;
           ctx.fillText(p.char, px, py);
-
-          if (Math.random() < 0.05) {
+          if (Math.random() < 0.05)
             p.char = chars[Math.floor(Math.random() * chars.length)];
-          }
         }
       }
       ctx.shadowBlur = 0;
-      requestAnimationFrame(drawMatrix3D);
+      animId = requestAnimationFrame(draw);
     }
-    drawMatrix3D();
+    animId = requestAnimationFrame(draw);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        cancelAnimationFrame(animId);
+      },
+      { once: true },
+    );
   })();
 </script>
 
-<style is:global>
-  /* Tambahan Style untuk Sistem Tab Bahasa */
-  .menu-tabs-header {
-    padding: 0 !important;
-  }
-  .tabs-buttons-container {
-    display: flex;
-    gap: 4px;
-    padding: 6px 12px 0 12px;
-  }
-  .tab-btn {
-    background: transparent;
-    border: none;
-    color: #64748b;
-    font-family: monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 8px 14px;
-    cursor: pointer;
-    border-radius: 6px 6px 0 0;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s ease;
-  }
-  .tab-btn:hover {
-    color: #e2e8f0;
-  }
+<style>
   .tab-btn.active {
-    color: #00d2ff;
-    border-bottom: 2px solid #00d2ff;
-    background: rgba(0, 210, 255, 0.05);
-  }
-  .tab-content {
-    display: none;
-  }
-  .tab-content.active {
-    display: block;
-  }
-
-  /* Override default style pre dari Shiki agar menyatu dengan wrapper UI */
-  .code-viewport-area pre {
-    background-color: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .code-viewport-area code {
-    background-color: transparent !important;
-    padding: 0 !important;
-  }
-
-  /* Base Styles */
-  #matrix-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
-    background-color: #030712;
-  }
-  .api-slug-container {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    font-family: "Inter", system-ui, sans-serif;
-    color: #e2e8f0;
-    box-sizing: border-box;
-    z-index: 1;
-  }
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    width: 100%;
-    min-width: 0;
-  }
-  .left-panel,
-  .right-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    min-width: 0;
-  }
-  .endpoint-card-wrapper {
-    position: relative !important;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 6rem 1rem 1.25rem !important;
-    background: rgba(11, 15, 25, 0.8) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid #1f2937;
-    border-radius: 12px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-  }
-  .code-container-block {
-    position: relative !important;
-    background: rgba(9, 13, 22, 0.85) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid #1f2937;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
-    width: 100%;
-  }
-  .native-copy-trigger {
-    position: absolute !important;
-    top: 0.65rem !important;
-    right: 0.75rem !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 0.35rem !important;
-    background: #1e293b !important;
-    border: 1px solid #475569 !important;
-    border-radius: 6px !important;
-    color: #cbd5e1 !important;
-    font-family: inherit;
-    font-size: 0.7rem !important;
-    font-weight: 600 !important;
-    padding: 0.3rem 0.6rem !important;
-    cursor: pointer !important;
-    transition: all 0.15s ease !important;
-    z-index: 80 !important;
-  }
-  .endpoint-card-wrapper .native-copy-trigger {
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    right: 0.75rem !important;
-  }
-  .native-copy-trigger:hover {
-    background: #334155 !important;
-    border-color: #00d2ff !important;
-    color: #ffffff !important;
+    color: #00d2ff !important;
+    border-bottom-color: #00d2ff !important;
+    background: rgba(0, 210, 255, 0.05) !important;
   }
   .native-copy-trigger.copied-success {
     background: rgba(0, 210, 255, 0.15) !important;
     border-color: #00d2ff !important;
     color: #00d2ff !important;
-  }
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #94a3b8;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
-    padding: 0.5rem 1rem;
-    background: rgba(11, 15, 25, 0.8);
-    border: 1px solid #1f2937;
-    border-radius: 9999px;
-    transition: all 0.2s;
-    backdrop-filter: blur(4px);
-  }
-  .back-link:hover {
-    color: #00d2ff !important;
-    border-color: #00d2ff !important;
-  }
-  .panel-header {
-    border-bottom: 1px solid #1f2937;
-    padding-bottom: 2rem;
-    position: relative;
-  }
-  .category-badge {
-    font-family: monospace;
-    font-size: 0.8rem;
-    color: #00d2ff;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .api-main-title {
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0.5rem 0;
-    letter-spacing: -0.02em;
-  }
-  .api-main-desc {
-    font-size: 1rem;
-    color: #94a3b8;
-    margin: 0;
-    line-height: 1.6;
-  }
-  .panel-section-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .title-indicator {
-    width: 3px;
-    height: 12px;
-    background: #00d2ff;
-    border-radius: 2px;
-  }
-  .badge {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    min-width: 50px;
-    text-align: center;
-    letter-spacing: 0.05em;
-    flex-shrink: 0;
-  }
-  .scrollable-wrapper {
-    overflow-x: auto !important;
-    width: 100%;
-    display: block;
-  }
-  .code-text-highlight {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.95rem;
-    color: #e2e8f0;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .meta-info-card {
-    background: rgba(17, 24, 39, 0.4);
-    backdrop-filter: blur(4px);
-    border: 1px solid #1f2937;
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .meta-flex-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    color: #64748b;
-    font-family: monospace;
-  }
-  .code-block-header {
-    background: #0f172a;
-    padding: 0.75rem 1.25rem;
-    border-bottom: 1px solid #1f2937;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .block-title-text {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #94a3b8;
-    font-family: monospace;
-  }
-  .status-tag {
-    font-size: 0.7rem;
-    color: #10b981;
-    background: rgba(16, 185, 129, 0.1);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-family: monospace;
-    font-weight: 600;
-    margin-right: 5rem;
-  }
-  .code-viewport-area {
-    padding: 1.25rem;
-    overflow-x: auto !important;
-    background: rgba(7, 10, 18, 0.9);
-  }
-  .max-height-json {
-    max-height: 400px;
-    overflow-y: auto !important;
-  }
-
-  @media (min-width: 968px) {
-    .main-grid {
-      grid-template-columns: 55% 45% !important;
-      align-items: start;
-    }
-    .right-panel {
-      position: sticky;
-      top: 2rem;
-    }
   }
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -677,5 +449,9 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #374151;
+  }
+  .back-link:hover {
+    color: #00d2ff !important;
+    border-color: #00d2ff !important;
   }
 </style>

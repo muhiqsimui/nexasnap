@@ -14,24 +14,16 @@ const categoryLabels: Record<string, string> = {
 ---
 
 <BaseLayout title="Documentation" description="NexaSnap API Documentation">
-  <div
-    class="matrix-bg-container"
-    style="position: relative; min-height: 100vh; overflow: hidden; background-color: #030712;"
-  >
+  <div class="relative min-h-screen overflow-hidden bg-bg">
     <canvas
       id="matrixCanvas"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.35; z-index: 1;"
+      class="absolute inset-0 w-full h-full pointer-events-none opacity-35 z-0"
     ></canvas>
 
-    <div
-      style="position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; padding: 3rem 1.5rem;"
-    >
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <a
         href={base}
-        class="back-link"
-        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 500; margin-bottom: 2.5rem; transition: all 0.2s ease; padding: 0.5rem 1rem; background: #0b0f19; border: 1px solid #1f2937; border-radius: 9999px;"
-        onmouseover="this.style.color='#06b6d4'; this.style.borderColor='#06b6d4'"
-        onmouseout="this.style.color='#94a3b8'; this.style.borderColor='#1f2937'"
+        class="back-link inline-flex items-center gap-2 text-slate-400 no-underline text-xs sm:text-sm font-medium mb-6 sm:mb-10 px-3 sm:px-4 py-2 bg-surface border border-border rounded-full hover:text-accent hover:border-accent transition-all"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -43,43 +35,37 @@ const categoryLabels: Record<string, string> = {
           stroke-width="2.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          ><line x1="19" y1="12" x2="5" y2="12"></line><polyline
-            points="12 19 5 12 12 5"></polyline></svg
         >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
         Back to Home
       </a>
 
-      <header
-        style="margin-bottom: 4rem; position: relative; display: flex; flex-direction: column; gap: 1rem;"
-      >
+      <header class="mb-10 sm:mb-16 relative flex flex-col gap-3 sm:gap-4">
         <div
-          style="position: absolute; top: -50px; left: -20px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(0,0,0,0) 70%); pointer-events: none;"
+          class="absolute -top-12 -left-5 w-44 sm:w-52 h-44 sm:h-52 bg-[radial-gradient(circle,rgba(6,182,212,0.15)_0%,rgba(0,0,0,0)_70%)] pointer-events-none"
         >
         </div>
 
-        <div
-          style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;"
-        >
+        <div class="flex items-center gap-4 sm:gap-6 flex-wrap">
           <img
             src={`${base}/assets/nexasnap-logo.webp`}
-            alt="NexaSnap Logo Core"
+            alt="NexaSnap Logo"
             width="70"
             height="70"
-            style="object-fit: contain; filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.5)); animation: float 6s ease-in-out infinite;"
+            class="w-12 sm:w-[70px] h-12 sm:h-[70px] object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.5)] animate-float"
             onerror="this.style.display='none'"
           />
           <div>
-            <div
-              style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;"
-            >
+            <div class="flex items-center gap-2 sm:gap-3 mb-1">
               <span
-                style="background: rgba(6, 182, 212, 0.1); color: #06b6d4; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(6, 182, 212, 0.2); text-transform: uppercase; letter-spacing: 0.05em;"
+                class="bg-accent/10 text-accent text-[0.6rem] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full border border-accent/20 uppercase tracking-wider"
                 >v1.0.0</span
               >
             </div>
             <h1
-              class="glitch-text"
-              style="font-size: 3rem; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: -0.03em; background: linear-gradient(to right, #ffffff, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
+              class="text-2xl sm:text-5xl font-extrabold text-white m-0 tracking-tight bg-gradient-to-r from-white to-accent bg-clip-text text-transparent"
             >
               NexaSnap Core API
             </h1>
@@ -87,77 +73,65 @@ const categoryLabels: Record<string, string> = {
         </div>
 
         <p
-          class="description"
-          style="font-size: 1.1rem; color: #94a3b8; margin: 0; line-height: 1.7; max-width: 630px;"
+          class="text-sm sm:text-lg text-slate-400 m-0 leading-relaxed max-w-xl sm:max-w-2xl"
         >
           High-performance REST API architecture for real-time crypto markets,
           network news, and blockchain data indexing.
         </p>
 
         <div
-          style="background: #0b0f19; border: 1px solid #1f2937; border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); margin-top: 1rem;"
+          class="bg-surface border border-border rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col gap-2 sm:gap-3 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] mt-3 sm:mt-4"
         >
-          <div
-            style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;"
-          >
+          <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+            <div class="w-2 h-2 rounded-full bg-amber-500"></div>
             <div
-              style="width: 8px; height: 8px; background: #ef4444; border-radius: 50%;"
-            >
-            </div>
-            <div
-              style="width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"
-            >
-            </div>
-            <div
-              style="width: 8px; height: 8px; background: #06b6d4; border-radius: 50%; box-shadow: 0 0 8px #06b6d4;"
+              class="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_#06b6d4]"
             >
             </div>
             <span
-              style="color: #475569; font-family: monospace; font-size: 0.75rem; margin-left: 0.5rem; font-weight: 600;"
+              class="text-slate-600 font-mono text-[0.6rem] sm:text-xs font-semibold ml-1 sm:ml-2"
               >LIVE CORE GATEWAY</span
             >
           </div>
           <div
-            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;"
+            class="flex items-center justify-between flex-wrap gap-2 sm:gap-4"
           >
             <code
-              style="color: #22d3ee; font-family: 'JetBrains Mono', monospace; font-size: 1rem; word-break: break-all;"
+              class="text-accent-hover font-mono text-xs sm:text-base break-all"
             >
               https://muhiqsimui.github.io{base}/api/v1/
             </code>
             <span
-              style="font-size: 0.75rem; color: #64748b; background: #111827; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid #1f2937; font-family: monospace;"
+              class="text-[0.6rem] sm:text-xs text-muted bg-surface-hover px-2 py-1 rounded border border-border font-mono"
               >STABLE ROOT</span
             >
           </div>
         </div>
       </header>
 
-      <main style="display: flex; flex-direction: column; gap: 3.5rem;">
+      <div class="flex flex-col gap-8 sm:gap-14">
         {
           categories.map((cat) => {
             const catDocs = getDocsByCategory(docs, cat);
             const label = categoryLabels[cat] || cat;
 
             return (
-              <section style="position: relative;" class="category-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="width: 4px; height: 20px; background: #06b6d4; border-radius: 2px; box-shadow: 0 0 10px #06b6d4;" />
-                    <h2 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin: 0; letter-spacing: -0.02em; font-family: 'JetBrains Mono', monospace;">
+              <section class="category-section relative">
+                <div class="flex items-center justify-between mb-4 sm:mb-6">
+                  <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="w-1 h-4 sm:h-5 bg-accent rounded-sm shadow-[0_0_10px_#06b6d4]" />
+                    <h2 class="text-base sm:text-xl font-bold text-white m-0 tracking-tight font-mono">
                       // {label}
                     </h2>
                   </div>
-                  <span
-                    class="meta"
-                    style="font-size: 0.75rem; color: #64748b; font-weight: 600; font-family: monospace; background: #0b0f19; padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid #1f2937;"
-                  >
+                  <span class="text-[0.6rem] sm:text-xs text-muted font-semibold font-mono bg-surface px-2 sm:px-3 py-1 sm:py-1.5 rounded-md border border-border">
                     {catDocs.length}{" "}
                     {catDocs.length > 1 ? "MATRICES" : "MATRIX"}
                   </span>
                 </div>
 
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.85rem;">
+                <ul class="list-none p-0 m-0 flex flex-col gap-2 sm:gap-3">
                   {catDocs.map((doc) => {
                     const isGet = doc.method?.toUpperCase() === "GET";
                     const methodColor = isGet ? "#06b6d4" : "#3b82f6";
@@ -169,36 +143,30 @@ const categoryLabels: Record<string, string> = {
                       : "rgba(59, 130, 246, 0.2)";
 
                     return (
-                      <li style="margin: 0;">
+                      <li class="m-0">
                         <a
                           href={url(base, `/docs/${doc.category}/${doc.slug}`)}
-                          style="display: flex; align-items: center; gap: 1.25rem; padding: 1.15rem 1.5rem; background: rgba(11, 15, 25, 0.75); backdrop-filter: blur(4px); border: 1px solid #1f2937; border-radius: 12px; text-decoration: none; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: inherit;"
-                          onmouseover="this.style.background='rgba(13, 27, 42, 0.8)'; this.style.borderColor='#06b6d4'; this.style.boxShadow='0 4px 20px rgba(6, 182, 212, 0.1)'; this.style.transform='translateX(6px)'"
-                          onmouseout="this.style.background='rgba(11, 15, 25, 0.75)'; this.style.borderColor='#1f2937'; this.style.boxShadow='none'; this.style.transform='translateX(0)'"
+                          class="flex items-center gap-3 sm:gap-5 px-3 sm:px-6 py-2.5 sm:py-4 bg-[rgba(11,15,25,0.75)] backdrop-blur border border-border rounded-xl sm:rounded-2xl no-underline text-inherit transition-all duration-300 group hover:bg-[rgba(13,27,42,0.8)] hover:border-accent hover:shadow-[0_4px_20px_rgba(6,182,212,0.1)] hover:translate-x-1.5"
                         >
-                          {/* Method Badge */}
                           <span
-                            class={`badge badge-${doc.method?.toLowerCase()}`}
-                            style={`display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 6px; background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder}; min-width: 55px; text-align: center; letter-spacing: 0.05em;`}
+                            class="font-mono text-[0.6rem] sm:text-xs font-bold px-1.5 sm:px-3 py-1 sm:py-1.5 rounded-md text-center tracking-wider whitespace-nowrap shrink-0"
+                            style={`background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder};`}
                           >
                             {doc.method}
                           </span>
 
-                          {/* Path Endpoint */}
-                          <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: #e2e8f0; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: none; padding: 0;">
+                          <code class="font-mono text-xs sm:text-base text-slate-200 font-medium bg-transparent p-0 truncate min-w-0">
                             {doc.endpoint}
                           </code>
 
-                          {/* Right Arrow Metadata */}
-                          <span
-                            class="endpoint-title"
-                            style="margin-left: auto; color: #475569; font-size: 0.85rem; font-weight: 400; text-align: right; padding-left: 1rem; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s;"
-                          >
-                            <span style="color: #94a3b8;">{doc.title}</span>
+                          <span class="ml-auto text-muted text-xs transition-colors duration-200 hidden sm:flex items-center gap-2 shrink-0">
+                            <span class="text-slate-400 text-xs sm:text-sm">
+                              {doc.title}
+                            </span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
+                              width="10"
+                              height="10"
                               viewBox="0 0 24 24"
                               fill="none"
                               stroke="currentColor"
@@ -218,127 +186,92 @@ const categoryLabels: Record<string, string> = {
             );
           })
         }
-      </main>
-
-      <footer
-        style="margin-top: 6rem; text-align: center; border-top: 1px solid #1f2937; padding-top: 2rem;"
-      >
-        <p
-          style="font-size: 0.8rem; color: #eaeaee; margin: 0; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em;"
-        >
-          // POWERED BY NEXASNAP LEDGER PROTOCOL &copy; 2026
-        </p>
-      </footer>
+      </div>
     </div>
   </div>
 </BaseLayout>
 
-<script type="text/javascript">
-  const canvas = document.getElementById("matrixCanvas");
-  const ctx = canvas.getContext("2d");
+<script is:inline data-astro-rerun>
+  (() => {
+    const canvas = document.getElementById("matrixCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let animId;
 
-  let width = (canvas.width = canvas.parentElement.offsetWidth);
-  let height = (canvas.height = canvas.parentElement.offsetHeight);
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
-  function resizeCanvas() {
-    width = canvas.width = canvas.parentElement.offsetWidth;
-    height = canvas.height = canvas.parentElement.offsetHeight;
-  }
-  window.addEventListener("resize", resizeCanvas);
-
-  const matrixChars = "0101X9F2A7B5C3D8E0101M4K7L2PQ9RS01";
-  const charsArr = matrixChars.split("");
-
-  // Struktur Sistem Partikel Lorong Z-Axis Proyeksi 3D
-  const maxParticles = 150;
-  const particles = [];
-
-  for (let i = 0; i < maxParticles; i++) {
-    particles.push({
-      x: (Math.random() - 0.5) * width,
-      y: (Math.random() - 0.5) * height,
-      z: Math.random() * width,
-      char: charsArr[Math.floor(Math.random() * charsArr.length)],
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     });
-  }
 
-  function draw3DMatrix() {
-    // Memberikan trail pudar gelap yang solid
-    ctx.fillStyle = "rgba(3, 7, 18, 0.18)";
-    ctx.fillRect(0, 0, width, height);
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZコンニチハ";
+    const numParticles = 120;
+    const particles = [];
 
-    // Titik pusat lenyap (Fokus di tengah atas sejajar logo)
-    const cx = width / 2;
-    const cy = height / 4;
-
-    for (let i = 0; i < maxParticles; i++) {
-      const p = particles[i];
-
-      // Kecepatan gerak maju melesat ke depan mata pengguna
-      p.z -= 4.0;
-
-      // Jika partikel keluar menabrak mata/layar depan, lempar kembali ke background terjauh
-      if (p.z <= 0) {
-        p.x = (Math.random() - 0.5) * width;
-        p.y = (Math.random() - 0.5) * height;
-        p.z = width;
-        p.char = charsArr[Math.floor(Math.random() * charsArr.length)];
-      }
-
-      // Proyeksi Perspektif Objek 3D ke Bidang Layar 2D
-      const scaleFactor = 350 / p.z;
-      const px = p.x * scaleFactor + cx;
-      const py = p.y * scaleFactor + cy;
-
-      if (px < 0 || px > width || py < 0 || py > height) continue;
-
-      // Kalkulasi ukuran huruf: Semakin mendekat ke pengguna, teks semakin membesar
-      const size = Math.min(Math.max((1 - p.z / width) * 20, 7), 22);
-      ctx.font = `${size}px monospace`;
-
-      // Pewarnaan Berdasarkan Kedalaman (Z-Depth Color Scaling)
-      const alpha = 1 - p.z / width;
-
-      if (alpha > 0.88) {
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`; // Flash terdepan: Putih Terang
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#22d3ee";
-      } else if (alpha > 0.45) {
-        ctx.fillStyle = `rgba(34, 211, 238, ${alpha})`; // Tengah jalan: Cyber Cyan Neon
-        ctx.shadowBlur = 0;
-      } else {
-        ctx.fillStyle = `rgba(8, 145, 178, ${alpha})`; // Kejauhan latar belakang: Biru Deep Tua
-        ctx.shadowBlur = 0;
-      }
-
-      // Mutasi karakter real-time di perjalanan
-      if (Math.random() > 0.96) {
-        p.char = charsArr[Math.floor(Math.random() * charsArr.length)];
-      }
-
-      ctx.fillText(p.char, px, py);
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * width - width / 2,
+        y: Math.random() * height - height / 2,
+        z: Math.random() * 1000,
+        char: chars[Math.floor(Math.random() * chars.length)],
+        speed: 4 + Math.random() * 6,
+      });
     }
 
-    requestAnimationFrame(draw3DMatrix);
-  }
+    function draw() {
+      ctx.fillStyle = "rgba(3, 7, 18, 0.15)";
+      ctx.fillRect(0, 0, width, height);
 
-  // Jalankan Loop Animasi
-  requestAnimationFrame(draw3DMatrix);
+      const cx = width / 2;
+      const cy = height / 2;
+
+      for (let i = 0; i < numParticles; i++) {
+        const p = particles[i];
+        p.z -= p.speed;
+
+        if (p.z <= 0) {
+          p.z = 1000;
+          p.x = Math.random() * width - width / 2;
+          p.y = Math.random() * height - height / 2;
+        }
+
+        const k = 400 / p.z;
+        const px = p.x * k + cx;
+        const py = p.y * k + cy;
+
+        if (px >= 0 && px <= width && py >= 0 && py <= height) {
+          const size = Math.max(k * 4, 8);
+          const alpha = Math.min((1000 - p.z) / 800, 1);
+
+          ctx.font = `bold ${size}px monospace`;
+          ctx.shadowBlur = size / 2;
+          ctx.shadowColor = "#00d2ff";
+          ctx.fillStyle = `rgba(0, 210, 255, ${alpha})`;
+          ctx.fillText(p.char, px, py);
+
+          if (Math.random() < 0.05)
+            p.char = chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      ctx.shadowBlur = 0;
+      animId = requestAnimationFrame(draw);
+    }
+    animId = requestAnimationFrame(draw);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        cancelAnimationFrame(animId);
+        window.removeEventListener("resize", () => {});
+      },
+      { once: true },
+    );
+  })();
 </script>
 
 <style>
-  /* Animasi melayang elegan logo brand */
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-8px) rotate(2deg);
-    }
-  }
-
-  /* Hover effect dinamis list baris dokumen */
   li a:hover .endpoint-title {
     color: #06b6d4 !important;
   }
