@@ -15,45 +15,82 @@ const base = import.meta.env.BASE_URL;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <title>{title} — NexaSnap</title>
   </head>
   <body>
     <nav class="navbar">
       <a href={base} class="nav-brand">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
-        </svg>
-        NexaSnap
+        <img
+          src={`${base}/assets/nexasnap-logo.webp`}
+          alt="NexaSnap Logo"
+          width="24"
+          height="24"
+          style="object-fit: contain; border-radius: 4px;"
+          onerror="this.style.display='none'"
+        />
+        <span>NexaSnap</span>
       </a>
       <div class="nav-links">
         <a href={base}>Home</a>
         <a href={`${base}/docs`}>Docs</a>
-        <a href="https://github.com/muhiqsimui/nexasnap" target="_blank">GitHub</a>
+        <a
+          href="https://github.com/muhiqsimui/nexasnap"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="github-btn"
+        >
+          GitHub
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+            ></path><polyline points="15 3 21 3 21 9"></polyline><line
+              x1="10"
+              y1="14"
+              x2="21"
+              y2="3"></line></svg
+          >
+        </a>
       </div>
     </nav>
+
     <main>
       <slot />
     </main>
+
     <footer class="footer">
-      <p>Powered by Astro, Go &amp; GitHub Pages • Data from CoinGecko</p>
+      <p>
+        // POWERED BY ASTRO, GO &amp; GITHUB PAGES • DATA FROM COINGECKO API
+      </p>
     </footer>
   </body>
 </html>
 
-<style>
+<style is:global>
+  /* Sinkronisasi Token Warna Menjadi Cyber Cyan / Neon Blue */
   :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --accent: #58a6ff;
-    --accent-hover: #79c0ff;
-    --green: #3fb950;
-    --red: #f85149;
-    --orange: #d29922;
+    --bg: #030712;
+    --surface: #0b0f19;
+    --surface-hover: #111827;
+    --border: #1f2937;
+    --border-hover: #374151;
+    --text: #f8fafc;
+    --text-muted: #64748b;
+    --accent: #06b6d4; /* Diubah ke Cyber Cyan */
+    --accent-hover: #22d3ee; /* Diubah ke Light Cyan */
+    --blue-crypto: #38bdf8; /* Neon Blue */
   }
 
   * {
@@ -63,152 +100,174 @@ const base = import.meta.env.BASE_URL;
   }
 
   body {
-    background: var(--bg);
+    background-color: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, sans-serif;
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    -webkit-font-smoothing: antialiased;
   }
 
+  /* Navbar styling modern dengan Flexbox Paksa */
   .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1.5rem;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 1rem 2rem !important;
     border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: rgba(3, 7, 18, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    font-size: 1.125rem;
-    color: var(--text);
-    text-decoration: none;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.6rem !important;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--text) !important;
+    text-decoration: none !important;
+    letter-spacing: -0.02em;
   }
 
   .nav-links {
-    display: flex;
-    gap: 1.25rem;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
   }
 
   .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
     font-size: 0.9rem;
-    transition: color 0.15s;
+    font-weight: 500;
+    transition: all 0.2s ease;
   }
 
   .nav-links a:hover {
-    color: var(--accent);
+    color: var(--text);
   }
 
+  .nav-links .github-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+  }
+
+  .nav-links .github-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(6, 182, 212, 0.05);
+  }
+
+  /* Jarak aman main content */
   main {
     flex: 1;
-    max-width: 1100px;
     width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem !important;
   }
 
+  /* HTML Tag Standard Overrides */
   a {
     color: var(--accent);
     text-decoration: none;
+    transition: color 0.15s ease;
   }
 
   a:hover {
     color: var(--accent-hover);
   }
 
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text);
+    letter-spacing: -0.02em;
   }
 
   pre {
-    background: var(--surface);
+    background: #070a12;
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1rem;
+    border-radius: 12px;
+    padding: 1.25rem;
     overflow-x: auto;
-    font-size: 0.85rem;
-    line-height: 1.5;
   }
 
   code {
-    font-family: "SF Mono", "Fira Code", "Fira Mono", monospace;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
     font-size: 0.85em;
     background: var(--surface);
-    padding: 0.15em 0.35em;
-    border-radius: 4px;
+    padding: 0.2em 0.4em;
+    border-radius: 6px;
+    color: #e2e8f0;
   }
 
   pre code {
     background: none;
     padding: 0;
+    color: inherit;
   }
 
   hr {
     border: none;
     border-top: 1px solid var(--border);
-    margin: 1.5rem 0;
+    margin: 2.5rem 0;
   }
 
-  .footer {
-    text-align: center;
-    padding: 1.5rem;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 0.85rem;
-  }
-
+  /* Aturan Global Komponen */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.25rem;
-    transition: border-color 0.15s;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .card:hover {
-    border-color: var(--accent);
+    border-color: var(--border-hover);
+    background: var(--surface-hover);
   }
 
   .badge {
     display: inline-block;
-    padding: 0.15rem 0.5rem;
-    border-radius: 12px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: "JetBrains Mono", monospace;
     text-transform: uppercase;
   }
 
+  /* Menyelaraskan warna badge GET menjadi biru cyan transparan */
   .badge-get {
-    background: rgba(88, 166, 255, 0.15);
+    background: rgba(6, 182, 212, 0.1);
     color: var(--accent);
+    border: 1px solid rgba(6, 182, 212, 0.2);
   }
 
   .meta {
@@ -216,43 +275,13 @@ const base = import.meta.env.BASE_URL;
     font-size: 0.85rem;
   }
 
-  .grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .grid-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  li a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 0.75rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: border-color 0.15s;
-  }
-
-  li a:hover {
-    border-color: var(--accent);
-  }
-
-  .description {
-    color: var(--text-muted);
-    margin-bottom: 2rem;
+  .footer {
+    text-align: center;
+    padding: 2.5rem;
+    border-top: 1px solid var(--border);
+    color: #27272a;
+    font-size: 0.75rem;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.05em;
   }
 </style>

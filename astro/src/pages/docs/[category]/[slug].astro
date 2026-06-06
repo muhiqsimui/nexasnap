@@ -8,17 +8,14 @@ const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
   const docsDir = path.resolve("../generated/docs");
-
   const files = fs.readdirSync(docsDir);
 
   return files.map((file) => {
     const doc = JSON.parse(fs.readFileSync(path.join(docsDir, file), "utf-8"));
-
     const apiFile = path.resolve(
       "../generated",
       doc.endpoint.replace(/^\//, ""),
     );
-
     const exampleResponse = JSON.parse(fs.readFileSync(apiFile, "utf-8"));
 
     return {
@@ -41,63 +38,212 @@ const categoryLabels: Record<string, string> = {
   news: "News",
 };
 const categoryLabel = categoryLabels[doc.category] || doc.category;
+
+// Setup warna dinamis berbasis HTTP Method
+const isGet = doc.method?.toUpperCase() === "GET";
+const methodColor = isGet ? "#10b981" : "#3b82f6";
+const methodBg = isGet ? "rgba(16, 185, 129, 0.1)" : "rgba(59, 130, 246, 0.1)";
+const methodBorder = isGet
+  ? "rgba(16, 185, 129, 0.2)"
+  : "rgba(59, 130, 246, 0.2)";
 ---
 
 <BaseLayout title={doc.title} description={doc.description}>
-  <a href={url(base, "/docs")} class="meta" style="display: inline-block; margin-bottom: 1rem;">
-    &larr; Back to Docs
-  </a>
+  <!-- Wrapper Utama Dark Web3 -->
+  <div
+    class="api-slug-container"
+    style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #e2e8f0; background-color: #030712; min-height: 100vh;"
+  >
+    <!-- Tombol Back Modern -->
+    <a
+      href={url(base, "/docs")}
+      class="back-link"
+      style="display: inline-flex; align-items: center; gap: 0.5rem; color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 500; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #0b0f19; border: 1px solid #1f2937; border-radius: 9999px; transition: all 0.2s;"
+      onmouseover="this.style.color='#10b981'; this.style.borderColor='#10b981'"
+      onmouseout="this.style.color='#94a3b8'; this.style.borderColor='#1f2937'"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><line x1="19" y1="12" x2="5" y2="12"></line><polyline
+          points="12 19 5 12 12 5"></polyline></svg
+      >
+      Back to Docs
+    </a>
 
-  <div class="page-header">
-    <div>
-      <span class="meta" style="font-size: 0.85rem;">{categoryLabel}</span>
-      <h1 style="margin-bottom: 0.5rem;">{doc.title}</h1>
-      <p class="meta">{doc.description}</p>
+    <!-- Layout Grid: Kiri Konten, Kanan Code/Terminal -->
+    <div
+      class="main-grid"
+      style="display: grid; grid-template-columns: 1fr; gap: 2.5rem;"
+    >
+      <!-- KOLOM KIRI: Dokumentasi & Detail -->
+      <div
+        class="left-panel"
+        style="display: flex; flex-direction: column; gap: 2.5rem;"
+      >
+        <!-- Header Halaman -->
+        <header
+          style="border-bottom: 1px solid #1f2937; padding-bottom: 2rem; position: relative;"
+        >
+          <div
+            style="position: absolute; top: -30px; left: -10px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, rgba(0,0,0,0) 70%); pointer-events: none;"
+          >
+          </div>
+          <span
+            style="font-family: monospace; font-size: 0.8rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;"
+            >{categoryLabel}</span
+          >
+          <h1
+            style="font-size: 2.25rem; font-weight: 800; color: #ffffff; margin: 0.5rem 0; letter-spacing: -0.02em;"
+          >
+            {doc.title}
+          </h1>
+          <p
+            style="font-size: 1rem; color: #94a3b8; margin: 0; line-height: 1.6;"
+          >
+            {doc.description}
+          </p>
+        </header>
+
+        <!-- Section Endpoint -->
+        <section>
+          <h2
+            style="font-size: 1rem; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;"
+          >
+            <span
+              style="width: 3px; height: 12px; background: #10b981; border-radius: 2px;"
+            ></span> HTTP Request
+          </h2>
+          <div
+            class="endpoint-card"
+            style={`display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: #0b0f19; border: 1px solid #1f2937; border-radius: 12px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);`}
+          >
+            <span
+              class={`badge badge-${doc.method?.toLowerCase()}`}
+              style={`font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 6px; background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder}; min-width: 50px; text-align: center; letter-spacing: 0.05em;`}
+            >
+              {doc.method}
+            </span>
+            <code
+              style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: #e2e8f0; font-weight: 600; word-break: break-all;"
+            >
+              {doc.endpoint}
+            </code>
+          </div>
+        </section>
+
+        <!-- Informasi Tambahan Opsional (Meta data API) -->
+        <section
+          style="background: rgba(17, 24, 39, 0.5); border: 1px solid #1f2937; border-radius: 12px; padding: 1.25rem;"
+        >
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; font-family: monospace;"
+          >
+            <span
+              >AUTHENTICATION: <span style="color: #f59e0b;">NONE</span></span
+            >
+            <span
+              >CONTENT-TYPE: <span style="color: #10b981;"
+                >APPLICATION/JSON</span
+              ></span
+            >
+          </div>
+        </section>
+      </div>
+
+      <!-- KOLOM KANAN: Playground & Code Blocks -->
+      <div
+        class="right-panel"
+        style="display: flex; flex-direction: column; gap: 2rem;"
+      >
+        <!-- Tab 1: Request Shell / Curl (Try It) -->
+        <div
+          style="background: #090d16; border: 1px solid #1f2937; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);"
+        >
+          <div
+            style="background: #0f172a; padding: 0.75rem 1.25rem; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between;"
+          >
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span
+                style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; font-family: monospace;"
+                >REQUEST EXAMPLE</span
+              >
+            </div>
+            <span
+              style="font-size: 0.70rem; color: #64748b; background: #030712; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace;"
+              >cURL</span
+            >
+          </div>
+          <div style="padding: 1.25rem; overflow-x: auto; background: #070a12;">
+            <pre
+              style="margin: 0;"><code style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #38bdf8; line-height: 1.5; white-space: pre-wrap; word-break: break-all;">curl -X {doc.method} https://muhiqsimui.github.io{base}{doc.endpoint.replace(/^\//, "")}</code></pre>
+          </div>
+        </div>
+
+        <!-- Tab 2: Response JSON Block -->
+        <div
+          style="background: #090d16; border: 1px solid #1f2937; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);"
+        >
+          <div
+            style="background: #0f172a; padding: 0.75rem 1.25rem; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between;"
+          >
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span
+                style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; font-family: monospace;"
+                >RESPONSE BODY</span
+              >
+            </div>
+            <span
+              style="font-size: 0.70rem; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace; font-weight: 600;"
+              >200 OK</span
+            >
+          </div>
+          <div
+            style="padding: 1.25rem; max-height: 400px; overflow-y: auto; background: #070a12;"
+            class="custom-scrollbar"
+          >
+            <pre
+              style="margin: 0;"><code style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #a7f3d0; line-height: 1.6; white-space: pre;">{JSON.stringify(exampleResponse, null, 2)}</code></pre>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <section>
-    <h2>Endpoint</h2>
-    <div class="endpoint-card">
-      <span class="badge badge-get">{doc.method}</span>
-      <code>{doc.endpoint}</code>
-    </div>
-  </section>
-
-  <section>
-    <h2>Example Response</h2>
-    <pre><code>{JSON.stringify(exampleResponse, null, 2)}</code></pre>
-  </section>
-
-  <hr />
-
-  <section>
-    <h2>Try It</h2>
-    <div class="card">
-      <pre><code>curl https://muhiqsimui.github.io{base}{doc.endpoint}</code></pre>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
-  .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2rem;
+  /* Responsive breakpoint untuk desktop: otomatis pecah 2 kolom kalau layar lebar */
+  @media (min-width: 968px) {
+    .main-grid {
+      grid-template-columns: 55% 45% !important;
+      align-items: start;
+    }
+    .right-panel {
+      position: sticky;
+      top: 2rem;
+    }
   }
 
-  .endpoint-card {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+  /* Custom styling scrollbar dalam terminal json response agar estetik */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
-
-  section {
-    margin-bottom: 2rem;
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #070a12;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #374151;
   }
 </style>

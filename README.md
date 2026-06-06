@@ -1,4 +1,7 @@
-# NexaSnap
+<div style="text-align: center;">
+  <img src="./assets/nexasnap-logo.webp" width="50" alt="logo">
+  <h1 style="margin: 0;">NEXASNAP</h1>
+</div>
 
 > Free Static API Platform — data from CoinGecko, served via GitHub Pages. Updated daily.
 
@@ -7,6 +10,8 @@
 NexaSnap is a **static API platform** that runs entirely on GitHub Pages. A Go generator fetches data from upstream APIs and web scraping, generates static JSON endpoints, and builds an Astro documentation site — all triggered daily via GitHub Actions.
 
 No backend server, no database, no hosting costs.
+
+<img src="./assets/nexasnap-banner.webp">
 
 ---
 
