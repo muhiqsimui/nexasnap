@@ -1,0 +1,8 @@
+{
+  "category": "crypto",
+  "description": "Current Ethereum price in USD",
+  "endpoint": "/api/v1/crypto/ethereum.json",
+  "method": "GET",
+  "slug": "ethereum",
+  "title": "Ethereum Price"
+}

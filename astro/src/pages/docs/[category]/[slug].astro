@@ -1,0 +1,51 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+export async function getStaticPaths() {
+  const docsDir = path.resolve("../generated/docs");
+
+  const files = fs.readdirSync(docsDir);
+
+  return files.map((file) => {
+    const doc = JSON.parse(fs.readFileSync(path.join(docsDir, file), "utf-8"));
+
+    return {
+      params: {
+        category: doc.category,
+        slug: doc.slug,
+      },
+      props: {
+        doc,
+      },
+    };
+  });
+}
+
+const { doc } = Astro.props;
+---
+
+<html>
+  <head>
+    <title>{doc.title}</title>
+  </head>
+
+  <body>
+    <h1>{doc.title}</h1>
+
+    <p>{doc.description}</p>
+
+    <hr />
+
+    <p>
+      Method:
+      <strong>{doc.method}</strong>
+    </p>
+
+    <p>Endpoint:</p>
+
+    <code>
+      {doc.endpoint}
+    </code>
+  </body>
+</html>
