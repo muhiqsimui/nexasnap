@@ -1,0 +1,18 @@
+
+# env
+.env
+
+# node
+node_modules
+
+# astro
+astro/dist
+
+# go
+generator/data
+
+# vscode
+.vscode
+
+# idea
+.idea
