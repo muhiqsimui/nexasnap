@@ -17,7 +17,9 @@ const docs = getDocs();
       {
         docs.map((doc) => (
           <li>
-            <a href={url(`/docs/${doc.category}/${doc.slug}`)}>{doc.title}</a>
+            <a href={url(base, `/docs/${doc.category}/${doc.slug}`)}>
+              {doc.title}
+            </a>
           </li>
         ))
       }

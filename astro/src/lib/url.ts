@@ -1,6 +1,4 @@
-export function url(path: string): string {
-  const base = import.meta.env.BASE_URL;
-
+export function url(base: string, path: string): string {
   const normalizedBase = base.replace(/\/$/, "");
   const normalizedPath = path.replace(/^\//, "");
 

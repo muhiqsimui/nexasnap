@@ -3,6 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { url } from "../../../lib/url";
 
+const base = import.meta.env.BASE_URL;
+
 export async function getStaticPaths() {
   const docsDir = path.resolve("../generated/docs");
 
@@ -58,7 +60,7 @@ const { doc, exampleResponse } = Astro.props;
   </head>
 
   <body>
-    <a href={url("/docs")}> Back to Docs </a>
+    <a href={url(base, "/docs")}> Back to Docs </a>
 
     <h1>{doc.title}</h1>
 

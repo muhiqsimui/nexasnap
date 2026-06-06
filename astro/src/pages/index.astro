@@ -3,6 +3,7 @@ import { getDocs } from "../lib/docs";
 import { url } from "../lib/url";
 
 const docs = getDocs();
+const base = import.meta.env.BASE_URL;
 ---
 
 <html>
@@ -49,7 +50,9 @@ const docs = getDocs();
         {
           docs.map((doc) => (
             <li>
-              <a href={url(`/docs/${doc.category}/${doc.slug}`)}>{doc.title}</a>
+              <a href={url(base, `/docs/${doc.category}/${doc.slug}`)}>
+                {doc.title}
+              </a>
             </li>
           ))
         }
@@ -59,7 +62,7 @@ const docs = getDocs();
 
       <h2>Documentation</h2>
 
-      <a href={url("/docs")}>View API Docs → </a>
+      <a href={url(base, "/docs")}>View API Docs → </a>
     </main>
   </body>
 </html>
