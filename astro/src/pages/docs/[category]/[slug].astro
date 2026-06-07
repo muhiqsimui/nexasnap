@@ -108,7 +108,7 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
           </h2>
 
           <div
-            class="relative flex items-center gap-2 sm:gap-4 p-3 sm:p-5 pr-10 sm:pr-24 bg-surface/80 backdrop-blur border border-border rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] flex-wrap sm:flex-nowrap"
+            class="flex items-center gap-2 sm:gap-4 p-3 sm:p-5 bg-surface/80 backdrop-blur border border-border rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] flex-wrap sm:flex-nowrap"
           >
             <span
               class="font-mono text-[0.6rem] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-center tracking-wider shrink-0"
@@ -120,36 +120,44 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
             <div class="overflow-x-auto w-full sm:w-auto flex-1 min-w-0">
               <code
                 class="font-mono text-xs sm:text-base text-slate-200 font-semibold whitespace-nowrap"
-                >{doc.endpoint}</code
               >
+                {doc.endpoint}
+              </code>
             </div>
 
-            <button
-              class="native-copy-trigger absolute top-1/2 -translate-y-1/2 right-2 sm:right-3 inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
-              data-raw-copy={doc.endpoint}
-              title="Copy Endpoint"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
+            <div class="flex items-center gap-2 shrink-0">
+              <button
+                class="native-copy-trigger inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
+                data-raw-copy={"https://muhiqsimui.github.io" +
+                  base +
+                  doc.endpoint}
+                title="Copy Endpoint"
               >
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path
-                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                ></path>
-              </svg>
-              <span class="state-txt">Copy</span>
-            </button>
-            <a
-              href={base + doc.endpoint}
-              class="border-2 border-green-400 w-20 h-6 flex items-center justify-center text-sm rounded-2xl hover:bg-green-950"
-              target="_blank">Check</a
-            >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+                <span class="state-txt">Copy</span>
+              </button>
+
+              <a
+                href={base + doc.endpoint}
+                class="border-2 border-green-400 w-20 h-6 flex items-center justify-center text-[0.8em] rounded-sm hover:bg-green-950"
+                target="_blank"
+              >
+                Open
+              </a>
+            </div>
           </div>
         </section>
 
