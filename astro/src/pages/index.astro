@@ -25,12 +25,19 @@ const categoryLabels: Record<string, string> = {
 
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <section class="text-center pt-12 sm:pt-20 pb-8 sm:pb-12">
-        <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[rgba(56,189,248,0.3)] bg-[rgba(6,182,212,0.04)] shadow-[0_0_15px_rgba(6,182,212,0.15)] mb-6 sm:mb-8">
+        <div
+          class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[rgba(56,189,248,0.3)] bg-[rgba(6,182,212,0.04)] shadow-[0_0_15px_rgba(6,182,212,0.15)] mb-6 sm:mb-8"
+        >
           <span class="relative flex h-2 w-2">
-            <span class="absolute inset-0 rounded-full bg-accent opacity-75 animate-ping-slow"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            <span
+              class="absolute inset-0 rounded-full bg-accent opacity-75 animate-ping-slow"
+            ></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"
+            ></span>
           </span>
-          <span class="text-[0.6rem] sm:text-xs font-mono text-accent-hover font-semibold tracking-widest">
+          <span
+            class="text-[0.6rem] sm:text-xs font-mono text-accent-hover font-semibold tracking-widest"
+          >
             SYSTEM STATUS: OPERATIONAL VIA GH-ACTIONS
           </span>
         </div>
@@ -52,71 +59,152 @@ const categoryLabels: Record<string, string> = {
           </h1>
         </div>
 
-        <p class="text-slate-400 text-sm sm:text-xl max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-14 leading-relaxed sm:leading-relaxed px-2">
+        <p
+          class="text-slate-400 text-sm sm:text-xl max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-14 leading-relaxed sm:leading-relaxed px-2"
+        >
           Decentralized, high-performance
-          <span class="text-accent-hover font-semibold border-b border-dashed border-accent/50 pb-0.5">
+          <span
+            class="text-accent-hover font-semibold border-b border-dashed border-accent/50 pb-0.5"
+          >
             Static API Engine
           </span>
           . Data compiled by Go binaries, distributed across global GitHub Edge Networks.
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 max-w-lg sm:max-w-2xl mx-auto mb-10 sm:mb-16">
-          <div class="stat-card bg-surface/60 backdrop-blur border border-border rounded-xl p-4 sm:p-6 transition-all duration-300">
-            <span class="block text-xl sm:text-2xl font-bold text-white font-mono mb-1">{docs.length}</span>
-            <span class="text-[0.65rem] sm:text-xs text-muted font-bold uppercase tracking-widest">ENDPOINTS</span>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 max-w-lg sm:max-w-2xl mx-auto mb-10 sm:mb-16"
+        >
+          <div
+            class="stat-card bg-surface/60 backdrop-blur border border-border rounded-xl p-4 sm:p-6 transition-all duration-300"
+          >
+            <span
+              class="block text-xl sm:text-2xl font-bold text-white font-mono mb-1"
+              >{docs.length}</span
+            >
+            <span
+              class="text-[0.65rem] sm:text-xs text-muted font-bold uppercase tracking-widest"
+              >ENDPOINTS</span
+            >
           </div>
-          <div class="stat-card bg-surface/60 backdrop-blur border border-border rounded-xl p-4 sm:p-6 transition-all duration-300">
-            <span class="block text-xl sm:text-2xl font-bold text-white font-mono mb-1">{categories.length}</span>
-            <span class="text-[0.65rem] sm:text-xs text-muted font-bold uppercase tracking-widest">CATEGORIES</span>
+          <div
+            class="stat-card bg-surface/60 backdrop-blur border border-border rounded-xl p-4 sm:p-6 transition-all duration-300"
+          >
+            <span
+              class="block text-xl sm:text-2xl font-bold text-white font-mono mb-1"
+              >{categories.length}</span
+            >
+            <span
+              class="text-[0.65rem] sm:text-xs text-muted font-bold uppercase tracking-widest"
+              >CATEGORIES</span
+            >
           </div>
-          <div class="stat-card-blue bg-surface/60 backdrop-blur border border-accent/30 rounded-xl p-4 sm:p-6 transition-all duration-300 shadow-[inset_0_0_10px_rgba(6,182,212,0.05)]">
-            <span class="block text-xl sm:text-2xl font-bold text-accent-hover font-mono mb-1">0 ms</span>
-            <span class="text-[0.65rem] sm:text-xs text-accent font-bold uppercase tracking-widest">DB OVERHEAD</span>
+          <div
+            class="stat-card-blue bg-surface/60 backdrop-blur border border-accent/30 rounded-xl p-4 sm:p-6 transition-all duration-300 shadow-[inset_0_0_10px_rgba(6,182,212,0.05)]"
+          >
+            <span
+              class="block text-xl sm:text-2xl font-bold text-accent-hover font-mono mb-1"
+              >0 ms</span
+            >
+            <span
+              class="text-[0.65rem] sm:text-xs text-accent font-bold uppercase tracking-widest"
+              >DB OVERHEAD</span
+            >
           </div>
         </div>
       </section>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-12 sm:mb-24">
-        <div class="feature-card bg-[rgba(11,15,25,0.7)] border border-border rounded-2xl p-5 sm:p-7 transition-all duration-300">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-12 sm:mb-24"
+      >
+        <div
+          class="feature-card bg-[rgba(11,15,25,0.7)] border border-border rounded-2xl p-5 sm:p-7 transition-all duration-300"
+        >
           <div class="text-accent mb-3">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
           </div>
-          <h4 class="text-base sm:text-lg text-white font-semibold mb-2">Serverless Pipeline</h4>
-          <p class="text-sm text-muted leading-relaxed">No runtime active layers. Zero database crashes. Built explicitly to eliminate infrastructure cost limits.</p>
+          <h4 class="text-base sm:text-lg text-white font-semibold mb-2">
+            Serverless Pipeline
+          </h4>
+          <p class="text-sm text-muted leading-relaxed">
+            No runtime active layers. Zero database crashes. Built explicitly to
+            eliminate infrastructure cost limits.
+          </p>
         </div>
-        <div class="feature-card bg-[rgba(11,15,25,0.7)] border border-border rounded-2xl p-5 sm:p-7 transition-all duration-300">
+        <div
+          class="feature-card bg-[rgba(11,15,25,0.7)] border border-border rounded-2xl p-5 sm:p-7 transition-all duration-300"
+        >
           <div class="text-blue-500 mb-3">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              ></path>
             </svg>
           </div>
-          <h4 class="text-base sm:text-lg text-white font-semibold mb-2">Edge CDN Topology</h4>
-          <p class="text-sm text-muted leading-relaxed">Every structured JSON payload compiled is replicated into GitHub's highly resilient global CDN network node.</p>
+          <h4 class="text-base sm:text-lg text-white font-semibold mb-2">
+            Edge CDN Topology
+          </h4>
+          <p class="text-sm text-muted leading-relaxed">
+            Every structured JSON payload compiled is replicated into GitHub's
+            highly resilient global CDN network node.
+          </p>
         </div>
       </div>
 
       <section class="mb-12 sm:mb-24">
-        <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-3 font-mono">
-          <span class="w-1 h-3 sm:h-3.5 bg-accent rounded-sm shadow-[0_0_8px_#06b6d4]"></span>
+        <h2
+          class="text-xs sm:text-sm font-bold text-white uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-3 font-mono"
+        >
+          <span
+            class="w-1 h-3 sm:h-3.5 bg-accent rounded-sm shadow-[0_0_8px_#06b6d4]"
+          ></span>
           $ execute_init_test
         </h2>
 
-        <div class="terminal-box bg-[#05070f] border border-border rounded-2xl overflow-hidden transition-colors duration-300">
-          <div class="bg-surface px-4 sm:px-5 py-3 border-b border-border flex items-center justify-between">
-            <span class="text-[0.65rem] sm:text-xs font-semibold text-slate-400 font-mono">TEST_01 // CORE_MARKETS</span>
+        <div
+          class="terminal-box bg-[#05070f] border border-border rounded-2xl overflow-hidden transition-colors duration-300"
+        >
+          <div
+            class="bg-surface px-4 sm:px-5 py-3 border-b border-border flex items-center justify-between"
+          >
+            <span
+              class="text-[0.65rem] sm:text-xs font-semibold text-slate-400 font-mono"
+              >TEST_01 // CORE_MARKETS</span
+            >
             <span class="text-[0.6rem] text-slate-600 font-mono">SH</span>
           </div>
           <div class="p-4 sm:p-5 overflow-x-auto">
-            <pre class="m-0 bg-transparent border-none p-0"><code class="font-mono text-blue-crypto text-sm sm:text-base">curl https://muhiqsimui.github.io{base}/api/v1/crypto/bitcoin.json</code></pre>
+            <pre
+              class="m-0 bg-transparent border-none p-0"><code class="font-mono text-blue-crypto text-sm sm:text-base">curl https://muhiqsimui.github.io{base}/api/v1/crypto/bitcoin.json</code></pre>
           </div>
         </div>
       </section>
 
       <section class="mb-12 sm:mb-16">
         <div class="flex items-center justify-between mb-6 sm:mb-8">
-          <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-widest font-mono m-0">
+          <h2
+            class="text-xs sm:text-sm font-bold text-white uppercase tracking-widest font-mono m-0"
+          >
             Index Matrices
           </h2>
           <a
@@ -124,7 +212,14 @@ const categoryLabels: Record<string, string> = {
             class="pulse-link text-sm text-accent font-semibold inline-flex items-center gap-1 transition-all duration-200"
           >
             Open Shell Reference
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
@@ -166,9 +261,9 @@ const categoryLabels: Record<string, string> = {
                       <li class="text-center mt-2 sm:mt-3">
                         <a
                           href={url(base, "/docs")}
-                          class="text-[0.65rem] sm:text-xs text-muted font-mono underline hover:text-accent transition-colors no-underline"
+                          class="text-md sm:text-md bg-transparent font-mono hover:bg-accent/10 transition-colors no-underline p-2 rounded border-1 border-accent/20 hover:border-accent/50"
                         >
-                          View complete stack (+{catDocs.length - 3} matrix files)
+                          View More {catDocs.length - 3}+ Endpoint
                         </a>
                       </li>
                     )}
@@ -190,8 +285,8 @@ const categoryLabels: Record<string, string> = {
     const ctx = canvas.getContext("2d");
     let animId;
 
-    let width = canvas.width = canvas.parentElement.offsetWidth;
-    let height = canvas.height = canvas.parentElement.offsetHeight;
+    let width = (canvas.width = canvas.parentElement.offsetWidth);
+    let height = (canvas.height = canvas.parentElement.offsetHeight);
 
     function resizeCanvas() {
       width = canvas.width = canvas.parentElement.offsetWidth;
@@ -252,7 +347,8 @@ const categoryLabels: Record<string, string> = {
           ctx.shadowBlur = 0;
         }
 
-        if (Math.random() > 0.95) p.char = chars[Math.floor(Math.random() * chars.length)];
+        if (Math.random() > 0.95)
+          p.char = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(p.char, px, py);
       }
 
@@ -261,10 +357,14 @@ const categoryLabels: Record<string, string> = {
 
     animId = requestAnimationFrame(draw);
 
-    document.addEventListener("astro:before-swap", () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resizeCanvas);
-    }, { once: true });
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        cancelAnimationFrame(animId);
+        window.removeEventListener("resize", resizeCanvas);
+      },
+      { once: true },
+    );
   })();
 </script>
 

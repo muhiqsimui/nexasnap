@@ -162,6 +162,9 @@ make build
 
 # 6. Preview locally
 make dev
+
+# if you dont install make you can open Makefile then run the sciprt manually
+
 ```
 
 ### Development
