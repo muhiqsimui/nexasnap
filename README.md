@@ -1,4 +1,4 @@
-[![Deploy](https://github.com/muhiqsimui/nexasnap/actions/workflows/deploy.yml/badge.svg)](https://github.com/muhiqsimui/nexasnap/actions/workflows/deploy.yml)
+[![PayPal](https://img.shields.io/badge/Support-PayPal-003087?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/muhiqmui)
 
 <div style="text-align: center;">
   <img src="./assets/nexasnap-logo.webp" width="50" alt="logo">

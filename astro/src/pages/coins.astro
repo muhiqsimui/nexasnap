@@ -1,0 +1,503 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCoins, formatPrice, formatLargeNumber } from "../lib/coins";
+import { getDocs } from "../lib/docs";
+import { url } from "../lib/url";
+
+const coins = getCoins();
+const docs = getDocs();
+const base = import.meta.env.BASE_URL;
+
+const cryptoDocs = docs.filter((d) => d.category === "crypto");
+const slugMap: Record<string, string> = {};
+for (const doc of cryptoDocs) {
+  slugMap[doc.title.replace(/ \(.*\)$/, "").toLowerCase()] = doc.slug;
+}
+
+const totalMarketCap = coins.reduce((sum, c) => sum + c.market_cap, 0);
+const totalVolume = coins.reduce((sum, c) => sum + c.total_volume, 0);
+const positiveCoins = coins.filter((c) => c.price_change_percentage_24h > 0);
+
+const updated = new Date(
+  coins.length > 0 ? coins[0].last_updated : Date.now(),
+).toLocaleString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZoneName: "short",
+});
+---
+
+<BaseLayout
+  title="Coins"
+  description="Live cryptocurrency prices and market data"
+>
+  <div
+    class="relative min-h-screen bg-[#0b0f19] text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200"
+  >
+    <div
+      class="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-cyan-500/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none"
+    >
+    </div>
+    <div
+      class="absolute top-1/3 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-indigo-500/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none"
+    >
+    </div>
+
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-16 relative z-10"
+    >
+      <div class="text-center mb-10 sm:mb-12">
+        <div
+          class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/5 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.15)] mb-5 transition-all hover:border-cyan-500/50 max-w-full"
+        >
+          <span class="relative flex h-2 w-2 shrink-0">
+            <span
+              class="absolute inset-0 rounded-full bg-cyan-400 opacity-75 animate-ping"
+            ></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"
+            ></span>
+          </span>
+          <span
+            class="text-[0.65rem] sm:text-[0.7rem] font-mono text-cyan-400 font-bold tracking-widest uppercase truncate"
+          >
+            Market Snapshot &middot; {updated}
+          </span>
+        </div>
+
+        <h1
+          class="text-3xl sm:text-6xl font-black tracking-tight text-white mb-3 sm:mb-4"
+        >
+          Crypto <span
+            class="bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent"
+            >Dashboard</span
+          >
+        </h1>
+        <p
+          class="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed px-2"
+        >
+          Cryptocurrency insights powered by
+          <span
+            class="text-cyan-400 font-semibold hover:underline cursor-pointer"
+            >CoinGecko</span
+          >. Updated once daily at a designated cache time.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
+        <div
+          class="relative overflow-hidden bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:border-cyan-500/30 transition-all duration-300 shadow-lg group hover:shadow-[0_0_20px_rgba(6,182,212,0.05)]"
+        >
+          <div
+            class="absolute -right-6 -bottom-6 w-20 h-20 bg-cyan-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          >
+          </div>
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <span
+              class="text-[0.65rem] sm:text-xs text-slate-400 font-medium uppercase tracking-wider truncate"
+              >Total Tracked</span
+            >
+            <div
+              class="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-800/80 text-slate-400 border border-slate-700/30 group-hover:text-cyan-400 group-hover:border-cyan-500/20 transition-all duration-300 shrink-0"
+            >
+              <svg
+                class="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span
+              class="text-xl sm:text-3xl font-bold text-white font-mono tracking-tight truncate"
+              >{coins.length}</span
+            >
+            <span class="text-[0.65rem] sm:text-xs text-slate-500 font-medium"
+              >Assets</span
+            >
+          </div>
+        </div>
+
+        <div
+          class="relative overflow-hidden bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:border-cyan-500/30 transition-all duration-300 shadow-lg group hover:shadow-[0_0_20px_rgba(6,182,212,0.05)]"
+        >
+          <div
+            class="absolute -right-6 -bottom-6 w-20 h-20 bg-cyan-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          >
+          </div>
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <span
+              class="text-[0.65rem] sm:text-xs text-slate-400 font-medium uppercase tracking-wider truncate"
+              >Market Cap</span
+            >
+            <div
+              class="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-800/80 text-slate-400 border border-slate-700/30 group-hover:text-cyan-400 group-hover:border-cyan-500/20 transition-all duration-300 shrink-0"
+            >
+              <svg
+                class="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <span
+            class="block text-xl sm:text-3xl font-bold text-white font-mono tracking-tight truncate"
+            >{formatLargeNumber(totalMarketCap)}</span
+          >
+        </div>
+
+        <div
+          class="relative overflow-hidden bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:border-cyan-500/30 transition-all duration-300 shadow-lg group hover:shadow-[0_0_20px_rgba(6,182,212,0.05)]"
+        >
+          <div
+            class="absolute -right-6 -bottom-6 w-20 h-20 bg-cyan-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          >
+          </div>
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <span
+              class="text-[0.65rem] sm:text-xs text-slate-400 font-medium uppercase tracking-wider truncate"
+              >Volume (24h)</span
+            >
+            <div
+              class="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-800/80 text-slate-400 border border-slate-700/30 group-hover:text-cyan-400 group-hover:border-cyan-500/20 transition-all duration-300 shrink-0"
+            >
+              <svg
+                class="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+          </div>
+          <span
+            class="block text-xl sm:text-3xl font-bold text-white font-mono tracking-tight truncate"
+            >{formatLargeNumber(totalVolume)}</span
+          >
+        </div>
+
+        <div
+          class="relative overflow-hidden bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:border-emerald-500/20 transition-all duration-300 shadow-lg group hover:shadow-[0_0_20px_rgba(16,185,129,0.05)]"
+        >
+          <div
+            class="absolute -right-6 -bottom-6 w-20 h-20 bg-emerald-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          >
+          </div>
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <span
+              class="text-[0.65rem] sm:text-xs text-slate-400 font-medium uppercase tracking-wider truncate"
+              >Gainers (24h)</span
+            >
+            <div
+              class="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/10 group-hover:bg-emerald-500/20 transition-all duration-300 shrink-0"
+            >
+              <svg
+                class="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span
+              class="text-xl sm:text-3xl font-bold text-emerald-400 font-mono tracking-tight truncate"
+              >{positiveCoins.length}</span
+            >
+            <span
+              class="text-[0.65rem] sm:text-xs text-emerald-500/70 font-medium font-sans"
+              >Up</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6"
+      >
+        <div class="relative flex-1">
+          <div
+            class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <input
+            id="coinSearch"
+            type="text"
+            placeholder="Search assets by name or ticker..."
+            class="w-full bg-slate-900/60 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/80 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200"
+          />
+        </div>
+
+        <div
+          class="flex items-center justify-between sm:justify-start gap-3 bg-slate-900/40 px-4 py-2 sm:py-1.5 rounded-xl border border-slate-800/60"
+        >
+          <span
+            class="text-xs text-slate-400 font-mono font-medium tracking-wider whitespace-nowrap"
+          >
+            SORT BY:
+          </span>
+          <select
+            id="sortSelect"
+            class="bg-transparent text-sm text-slate-200 font-medium focus:outline-none cursor-pointer py-1 pl-1 pr-2 transition-colors hover:text-white"
+          >
+            <option value="rank" class="bg-slate-900 text-white"
+              >Rank (#)</option
+            >
+            <option value="price" class="bg-slate-900 text-white"
+              >Highest Price</option
+            >
+            <option value="gain" class="bg-slate-900 text-white"
+              >Top Gainers</option
+            >
+            <option value="loss" class="bg-slate-900 text-white"
+              >Top Losers</option
+            >
+            <option value="name" class="bg-slate-900 text-white"
+              >Alphabetical (A-Z)</option
+            >
+          </select>
+        </div>
+      </div>
+
+      <div
+        class="bg-slate-900/30 backdrop-blur-xl border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl"
+      >
+        <div class="overflow-x-auto select-none sm:select-text">
+          <table class="w-full text-left border-collapse" id="coinTable">
+            <thead>
+              <tr
+                class="border-b border-slate-800 bg-slate-900/50 text-[0.7rem] text-slate-400 font-bold uppercase tracking-widest"
+              >
+                <th
+                  class="pl-4 pr-2 sm:pl-6 sm:pr-3 py-4 w-12 sm:w-16 text-center hidden sm:table-cell"
+                  >#</th
+                >
+                <th class="px-4 py-4">Asset</th>
+                <th class="px-4 py-4 text-right">Price</th>
+                <th class="px-4 py-4 text-right">24h Change</th>
+                <th class="px-4 py-4 text-right hidden md:table-cell"
+                  >Market Cap</th
+                >
+                <th class="px-4 py-4 text-right hidden lg:table-cell"
+                  >Volume (24h)</th
+                >
+                <th class="pl-4 pr-6 py-4 text-right hidden xl:table-cell"
+                  >Supply</th
+                >
+              </tr>
+            </thead>
+            <tbody id="coinBody" class="divide-y divide-slate-800/40">
+              {
+                coins.map((coin) => {
+                  const docSlug = slugMap[coin.name.toLowerCase()];
+                  const linkHref = docSlug
+                    ? url(base, `/docs/crypto/${docSlug}`)
+                    : null;
+                  const isPositive = coin.price_change_percentage_24h >= 0;
+
+                  const pctColor = isPositive
+                    ? "text-emerald-400"
+                    : "text-rose-400";
+                  const pctBg = isPositive
+                    ? "bg-emerald-500/10"
+                    : "bg-rose-500/10";
+                  const pctBorder = isPositive
+                    ? "border-emerald-500/10"
+                    : "border-rose-500/10";
+
+                  return (
+                    <tr
+                      class="coin-row transition-all duration-150 hover:bg-slate-800/30 group/row"
+                      data-name={coin.name.toLowerCase()}
+                      data-symbol={coin.symbol.toLowerCase()}
+                      data-price={coin.current_price}
+                      data-change={coin.price_change_percentage_24h}
+                    >
+                      {/* Rank Column - Hidden on mobile view */}
+                      <td class="pl-4 pr-2 sm:pl-6 sm:pr-3 py-4 text-xs text-slate-500 font-mono text-center hidden sm:table-cell">
+                        {coin.market_cap_rank}
+                      </td>
+
+                      {/* Asset Info Column */}
+                      <td class="px-4 py-3.5 sm:py-4">
+                        <a
+                          href={linkHref || "#"}
+                          class="flex items-center gap-2.5 sm:gap-3 no-underline inline-flex"
+                          {...(linkHref
+                            ? {}
+                            : { style: "pointer-events:none;" })}
+                        >
+                          <div class="relative p-0.5 rounded-full bg-slate-800 border border-slate-700/50 group-hover/row:border-cyan-500/50 transition-colors shrink-0">
+                            <img
+                              src={coin.image}
+                              alt={coin.name}
+                              width="28"
+                              height="28"
+                              class="w-6 h-6 sm:w-7 sm:h-7 rounded-full"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div class="flex flex-col min-w-0">
+                            <span class="text-xs sm:text-sm font-semibold text-white group-hover/row:text-cyan-400 transition-colors duration-150 truncate max-w-[100px] sm:max-w-none">
+                              {coin.name}
+                            </span>
+                            <span class="text-[0.6rem] sm:text-[0.65rem] text-slate-500 font-mono uppercase tracking-wider">
+                              {coin.symbol}{" "}
+                              <span class="sm:hidden text-slate-600 font-sans font-normal ml-0.5">
+                                #{coin.market_cap_rank}
+                              </span>
+                            </span>
+                          </div>
+                        </a>
+                      </td>
+
+                      {/* Current Price Column */}
+                      <td class="px-4 py-3.5 sm:py-4 text-xs sm:text-sm text-right font-mono text-white font-medium">
+                        {formatPrice(coin.current_price)}
+                      </td>
+
+                      {/* 24h Percentage Change Column */}
+                      <td class="px-4 py-3.5 sm:py-4 text-right">
+                        <span
+                          class={`inline-flex items-center px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg text-[0.65rem] sm:text-xs font-mono font-semibold border ${pctBg} ${pctColor} ${pctBorder}`}
+                        >
+                          <span class="text-[0.55rem] sm:text-[0.7rem] mr-0.5">
+                            {isPositive ? "▲" : "▼"}
+                          </span>
+                          {Math.abs(coin.price_change_percentage_24h).toFixed(
+                            2,
+                          )}
+                          %
+                        </span>
+                      </td>
+
+                      {/* Hidden Desktop Columns */}
+                      <td class="px-4 py-4 text-sm text-right font-mono text-slate-300 hidden md:table-cell">
+                        {formatLargeNumber(coin.market_cap)}
+                      </td>
+
+                      <td class="px-4 py-4 text-sm text-right font-mono text-slate-300 hidden lg:table-cell">
+                        {formatLargeNumber(coin.total_volume)}
+                      </td>
+
+                      <td class="pl-4 pr-6 py-4 text-sm text-right font-mono text-slate-500 hidden xl:table-cell group-hover/row:text-slate-400 transition-colors">
+                        {coin.circulating_supply
+                          ? `${(coin.circulating_supply / 1e6).toFixed(1)}M`
+                          : "-"}
+                      </td>
+                    </tr>
+                  );
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p
+        class="text-center text-[0.65rem] sm:text-[0.7rem] text-slate-500 mt-8 font-mono tracking-wide px-4"
+      >
+        Market snapshot is illustrative. Data cached once daily via CoinGecko
+        API &middot; Snapshot time: {updated}
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline data-astro-rerun>
+  const searchInput = document.getElementById("coinSearch");
+  const sortSelect = document.getElementById("sortSelect");
+  const coinBody = document.getElementById("coinBody");
+  if (!searchInput || !sortSelect || !coinBody) throw new Error();
+  const rows = Array.from(coinBody.querySelectorAll(".coin-row"));
+
+  function filterAndSort() {
+    const query = searchInput.value.toLowerCase();
+    const sort = sortSelect.value;
+
+    let filtered = rows.filter((row) => {
+      const name = row.getAttribute("data-name") || "";
+      const symbol = row.getAttribute("data-symbol") || "";
+      return name.includes(query) || symbol.includes(query);
+    });
+
+    filtered.sort((a, b) => {
+      const aPrice = parseFloat(a.getAttribute("data-price") || "0");
+      const bPrice = parseFloat(b.getAttribute("data-price") || "0");
+      const aChange = parseFloat(a.getAttribute("data-change") || "0");
+      const bChange = parseFloat(b.getAttribute("data-change") || "0");
+      const aName = a.getAttribute("data-name") || "";
+      const bName = b.getAttribute("data-name") || "";
+
+      switch (sort) {
+        case "price":
+          return bPrice - aPrice;
+        case "gain":
+          return bChange - aChange;
+        case "loss":
+          return aChange - bChange;
+        case "name":
+          return aName.localeCompare(bName);
+        default:
+          // Adjusted selector to target the rank string dynamically from the modified layout
+          const aRankText = a.getAttribute("data-symbol") ? a.innerHTML : "0";
+          const bRankText = b.getAttribute("data-symbol") ? b.innerHTML : "0";
+          const aRank = parseInt(aRankText.match(/#(\u200b|\d+)/)?.[1] || "0");
+          const bRank = parseInt(bRankText.match(/#(\u200b|\d+)/)?.[1] || "0");
+          return aRank - bRank;
+      }
+    });
+
+    const fragment = document.createDocumentFragment();
+    for (const row of filtered) {
+      fragment.appendChild(row);
+    }
+    coinBody.innerHTML = "";
+    coinBody.appendChild(fragment);
+  }
+
+  searchInput.addEventListener("input", filterAndSort);
+  sortSelect.addEventListener("change", filterAndSort);
+</script>

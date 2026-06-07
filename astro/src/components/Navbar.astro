@@ -1,0 +1,208 @@
+---
+const base = import.meta.env.BASE_URL;
+
+// Maintenance-Friendly: Cukup kelola menu navigasi di sini jika ada perubahan
+const navItems = [
+  { name: "Home", href: base },
+  { name: "Coins", href: `${base}/coins` },
+  { name: "Docs", href: `${base}/docs` },
+];
+---
+
+<header
+  class="w-full fixed top-0 left-0 z-50 px-4 pt-4 sm:px-6 lg:px-8 pointer-events-none"
+>
+  <nav
+    class="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl border border-white/10 bg-[#0b0f19]/70 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] pointer-events-auto relative"
+  >
+    <a
+      href={base}
+      class="flex items-center gap-2 font-extrabold text-base sm:text-lg text-white no-underline tracking-tight group z-50"
+    >
+      <div
+        class="relative w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center"
+      >
+        <img
+          src={`${base}/assets/nexasnap-logo.webp`}
+          alt="NexaSnap Logo Core"
+          class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.6)] transition-transform duration-300 group-hover:scale-105"
+          onerror="this.style.display='none'"
+        />
+      </div>
+      <span
+        class="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent"
+      >
+        NexaSnap
+      </span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-6">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-white/70 hover:text-white no-underline text-sm font-medium transition-all duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-cyan-400 after:transition-all hover:after:w-full"
+          >
+            {item.name}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="hidden md:flex items-center">
+      <a
+        href="https://github.com/muhiqsimui/nexasnap"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl text-white/90 hover:text-white no-underline text-sm font-medium transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
+      >
+        <span>GitHub</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"
+          ></path>
+        </svg>
+      </a>
+    </div>
+
+    <button
+      id="mobile-menu-toggle"
+      class="flex md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-colors z-50 focus:outline-none"
+      aria-label="Toggle Menu"
+    >
+      <svg
+        id="hamburger-icon"
+        class="w-5 h-5 block"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+      <svg
+        id="close-icon"
+        class="w-5 h-5 hidden"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <div
+      id="mobile-menu-container"
+      class="absolute top-[calc(100%+8px)] left-0 w-full bg-[#0b0f19]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 shadow-2xl flex flex-col gap-4 opacity-0 scale-95 pointer-events-none transition-all duration-300 origin-top md:hidden"
+    >
+      <div class="flex flex-col gap-1">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class="text-white/70 hover:text-cyan-400 py-3 px-2 rounded-xl hover:bg-white/[0.02] no-underline text-base font-semibold transition-all duration-200"
+            >
+              {item.name}
+            </a>
+          ))
+        }
+      </div>
+      <div class="h-px bg-white/10 my-1"></div>
+      <a
+        href="https://github.com/muhiqsimui/nexasnap"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center justify-center gap-2 w-full py-3.5 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-xl text-cyan-400 no-underline text-sm font-bold transition-all duration-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"
+          ></path>
+        </svg>
+        Follow on GitHub
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script is:inline data-astro-rerun>
+  (() => {
+    const toggleBtn = document.getElementById("mobile-menu-toggle");
+    const menuContainer = document.getElementById("mobile-menu-container");
+    const hamburgerIcon = document.getElementById("hamburger-icon");
+    const closeIcon = document.getElementById("close-icon");
+
+    if (!toggleBtn || !menuContainer || !hamburgerIcon || !closeIcon) return;
+
+    toggleBtn.addEventListener("click", () => {
+      const isOpened = menuContainer.classList.contains("opacity-100");
+
+      if (isOpened) {
+        // Tutup Menu Drawer
+        menuContainer.classList.remove(
+          "opacity-100",
+          "scale-100",
+          "pointer-events-auto",
+        );
+        menuContainer.classList.add(
+          "opacity-0",
+          "scale-95",
+          "pointer-events-none",
+        );
+        hamburgerIcon.classList.replace("hidden", "block");
+        closeIcon.classList.replace("block", "hidden");
+      } else {
+        // Buka Menu Drawer
+        menuContainer.classList.remove(
+          "opacity-0",
+          "scale-95",
+          "pointer-events-none",
+        );
+        menuContainer.classList.add(
+          "opacity-100",
+          "scale-100",
+          "pointer-events-auto",
+        );
+        hamburgerIcon.classList.replace("block", "hidden");
+        closeIcon.classList.replace("hidden", "block");
+      }
+    });
+
+    // Menutup menu otomatis jika user mengklik area di luar menu drawer
+    document.addEventListener("click", (e) => {
+      if (!toggleBtn.contains(e.target) && !menuContainer.contains(e.target)) {
+        menuContainer.classList.remove(
+          "opacity-100",
+          "scale-100",
+          "pointer-events-auto",
+        );
+        menuContainer.classList.add(
+          "opacity-0",
+          "scale-95",
+          "pointer-events-none",
+        );
+        hamburgerIcon.classList.replace("hidden", "block");
+        closeIcon.classList.replace("block", "hidden");
+      }
+    });
+  })();
+</script>
