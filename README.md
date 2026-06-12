@@ -1,8 +1,10 @@
-[![PayPal](https://img.shields.io/badge/Support-PayPal-003087?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/muhiqmui)
+<a href="https://paypal.me/muhiqmui" target="_blank">
+  <img src="https://img.shields.io/badge/Support-PayPal-003087?style=for-the-badge&logo=paypal&logoColor=white" alt="Support via PayPal" />
+</a>
 
-<div style="text-align: center;">
-  <img src="./assets/nexasnap-logo.webp" width="50" alt="logo">
-  <h1 style="margin: 0;">NEXASNAP (Zero Cost API)</h1>
+<div align=center>
+  <img src="./assets/nexasnap-logo.webp" width=50 alt="logo">
+  <h1 >NEXASNAP (Zero Cost API)</h1>
 </div>
 
 <div align=center>
