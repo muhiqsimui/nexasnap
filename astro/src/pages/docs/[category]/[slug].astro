@@ -60,11 +60,12 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
   ></canvas>
 
   <div
-    class="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-8 font-sans text-slate-200 box-border"
+    class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 font-sans text-slate-200 box-border"
   >
+    <!-- Back Link -->
     <a
       href={url(base, "/docs")}
-      class="back-link inline-flex items-center gap-2 text-slate-400 no-underline text-xs sm:text-sm font-medium mb-4 sm:mb-8 px-3 sm:px-4 py-2 bg-surface/80 border border-border rounded-full hover:text-cyan-400 hover:border-cyan-400 transition-all backdrop-blur"
+      class="back-link inline-flex items-center gap-2 text-slate-400 no-underline text-xs sm:text-sm font-medium mb-6 sm:mb-8 px-3.5 py-1.5 sm:px-4 sm:py-2 bg-slate-900/80 border border-slate-700/80 rounded-full hover:text-cyan-400 hover:border-cyan-400 transition-all backdrop-blur"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -83,15 +84,20 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
       Back to Docs
     </a>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 sm:gap-10">
-      <div class="flex flex-col gap-6 sm:gap-10 min-w-0">
-        <header class="border-b border-border pb-4 sm:pb-8 relative">
+    <!-- Main Content Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column (Documentation Info) -->
+      <div
+        class="lg:col-span-6 xl:col-span-7 flex flex-col gap-6 sm:gap-8 min-w-0"
+      >
+        <header class="border-b border-slate-800 pb-6 sm:pb-8">
           <span
             class="font-mono text-xs sm:text-sm text-cyan-400 font-bold uppercase tracking-wider"
-            >{categoryLabel}</span
           >
+            {categoryLabel}
+          </span>
           <h1
-            class="text-xl sm:text-4xl font-extrabold text-white my-2 sm:my-3 tracking-tight"
+            class="text-2xl sm:text-4xl font-extrabold text-white my-2 sm:my-3 tracking-tight leading-tight"
           >
             {doc.title}
           </h1>
@@ -100,34 +106,43 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
           </p>
         </header>
 
-        <section>
+        <!-- Section: HTTP Request -->
+        <section class="space-y-3">
           <h2
-            class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2"
+            class="text-xs sm:text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2"
           >
-            <span class="w-0.5 h-3 bg-cyan-400 rounded-sm"></span> HTTP Request
+            <span class="w-1 h-3.5 bg-cyan-400 rounded-full"></span> HTTP Request
           </h2>
 
           <div
-            class="flex items-center gap-2 sm:gap-4 p-3 sm:p-5 bg-surface/80 backdrop-blur border border-border rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] flex-wrap sm:flex-nowrap"
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 bg-slate-900/80 backdrop-blur border border-slate-800 rounded-xl shadow-inner min-w-0"
           >
-            <span
-              class="font-mono text-[0.6rem] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-center tracking-wider shrink-0"
-              style={`background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder};`}
-            >
-              {doc.method}
-            </span>
-
-            <div class="overflow-x-auto w-full sm:w-auto flex-1 min-w-0">
-              <code
-                class="font-mono text-xs sm:text-base text-slate-200 font-semibold whitespace-nowrap"
+            <!-- Endpoint Header & Info -->
+            <div class="flex items-center gap-3 min-w-0 overflow-hidden">
+              <span
+                class="font-mono text-[0.65rem] sm:text-xs font-bold px-2.5 py-1 rounded-md text-center tracking-wider shrink-0 uppercase"
+                style={`background: ${methodBg}; color: ${methodColor}; border: 1px solid ${methodBorder};`}
               >
-                {doc.endpoint}
-              </code>
+                {doc.method}
+              </span>
+
+              <div
+                class="overflow-x-auto custom-scrollbar pb-1 sm:pb-0 min-w-0 flex-1"
+              >
+                <code
+                  class="font-mono text-xs sm:text-sm text-slate-200 font-semibold whitespace-nowrap"
+                >
+                  {doc.endpoint}
+                </code>
+              </div>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <!-- Action Buttons -->
+            <div
+              class="flex items-center gap-2 shrink-0 self-end sm:self-auto border-t border-slate-800/60 pt-2.5 sm:pt-0 sm:border-t-0 w-full sm:w-auto justify-end"
+            >
               <button
-                class="native-copy-trigger inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
+                class="native-copy-trigger inline-flex items-center justify-center gap-1.5 bg-slate-800 border border-slate-700 rounded-md text-slate-300 font-sans text-xs font-medium px-2.5 py-1.5 cursor-pointer transition-all hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
                 data-raw-copy={"https://muhiqsimui.github.io" +
                   base +
                   doc.endpoint}
@@ -152,58 +167,89 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
 
               <a
                 href={base + doc.endpoint}
-                class="border-2 border-green-400 w-20 h-6 flex items-center justify-center text-[0.8em] rounded-sm hover:bg-green-950"
+                class="inline-flex items-center justify-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-400 rounded-md text-xs font-medium px-3 py-1.5 transition-all no-underline"
                 target="_blank"
+                rel="noopener noreferrer"
               >
-                Open
+                <span>Open</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  ><path
+                    d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                  ></path><polyline points="15 3 21 3 21 9"></polyline><line
+                    x1="10"
+                    y1="14"
+                    x2="21"
+                    y2="3"></line></svg
+                >
               </a>
             </div>
           </div>
         </section>
 
+        <!-- Section: Headers Info -->
         <section
-          class="bg-[rgba(17,24,39,0.4)] backdrop-blur border border-border rounded-xl p-4 sm:p-5"
+          class="bg-slate-900/40 backdrop-blur border border-slate-800 rounded-xl p-4 sm:p-5"
         >
           <div
-            class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 font-mono"
+            class="flex flex-col sm:flex-row justify-between gap-2 text-xs text-slate-400 font-mono"
           >
-            <span>AUTHENTICATION: <span class="text-amber-500">NONE</span></span
-            >
-            <span
-              >CONTENT-TYPE: <span class="text-emerald-500"
+            <div class="flex items-center gap-2">
+              <span class="text-slate-500">AUTHENTICATION:</span>
+              <span class="text-amber-400 font-semibold">NONE</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-slate-500">CONTENT-TYPE:</span>
+              <span class="text-emerald-400 font-semibold"
                 >APPLICATION/JSON</span
-              ></span
-            >
+              >
+            </div>
           </div>
         </section>
       </div>
 
-      <div class="flex flex-col gap-4 sm:gap-6 lg:sticky lg:top-8 min-w-0">
+      <!-- Right Column (Code & Response Viewers) -->
+      <div
+        class="lg:col-span-6 xl:col-span-5 flex flex-col gap-6 lg:sticky lg:top-8 min-w-0"
+      >
+        <!-- Code Examples Card -->
         <div
-          class="relative bg-[rgba(9,13,22,0.85)] backdrop-blur border border-border rounded-2xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)] w-full"
+          class="relative bg-slate-950/90 backdrop-blur border border-slate-800 rounded-2xl overflow-hidden shadow-2xl w-full"
         >
-          <div class="bg-slate-900 border-b border-border p-0">
-            <div class="flex gap-1 px-2 sm:px-3 pt-1.5 sm:pt-2 overflow-x-auto">
+          <!-- Tab Navigation -->
+          <div
+            class="bg-slate-900/90 border-b border-slate-800 px-2 sm:px-3 pt-2"
+          >
+            <div class="flex gap-1 overflow-x-auto custom-scrollbar pb-1">
               <button
-                class="tab-btn active text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                class="tab-btn active text-xs font-semibold font-mono px-3 py-2 cursor-pointer bg-transparent border-none text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap rounded-t-md"
                 data-tab="curl">cURL</button
               >
               <button
-                class="tab-btn text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                class="tab-btn text-xs font-semibold font-mono px-3 py-2 cursor-pointer bg-transparent border-none text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap rounded-t-md"
                 data-tab="javascript">JavaScript</button
               >
               <button
-                class="tab-btn text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                class="tab-btn text-xs font-semibold font-mono px-3 py-2 cursor-pointer bg-transparent border-none text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap rounded-t-md"
                 data-tab="python">Python</button
               >
               <button
-                class="tab-btn text-[0.6rem] sm:text-xs font-semibold font-mono px-2 sm:px-3.5 py-1.5 sm:py-2 cursor-pointer bg-transparent border-none text-slate-500 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap"
+                class="tab-btn text-xs font-semibold font-mono px-3 py-2 cursor-pointer bg-transparent border-none text-slate-400 hover:text-slate-200 border-b-2 border-transparent transition-all whitespace-nowrap rounded-t-md"
                 data-tab="php">PHP</button
               >
             </div>
           </div>
 
-          <div class="p-3 sm:p-5 overflow-x-auto bg-[rgba(7,10,18,0.9)]">
+          <!-- Tab Contents -->
+          <div
+            class="p-4 overflow-x-auto max-h-64 sm:max-h-80 overflow-y-auto custom-scrollbar"
+          >
             <div
               class="tab-content active"
               id="tab-curl"
@@ -234,8 +280,9 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
             </div>
           </div>
 
+          <!-- Copy Code Button -->
           <button
-            class="native-copy-trigger absolute top-2 sm:top-3 right-2 sm:right-3 inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
+            class="native-copy-trigger absolute top-2.5 right-2.5 inline-flex items-center gap-1 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-md text-slate-300 font-sans text-xs font-semibold px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
             id="copy-request-btn"
             title="Copy Code"
           >
@@ -256,31 +303,34 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
           </button>
         </div>
 
+        <!-- Response Body Card -->
         <div
-          class="relative bg-[rgba(9,13,22,0.85)] backdrop-blur border border-border rounded-2xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)] w-full"
+          class="relative bg-slate-950/90 backdrop-blur border border-slate-800 rounded-2xl overflow-hidden shadow-2xl w-full"
         >
           <div
-            class="bg-slate-900 px-3 sm:px-5 py-2 sm:py-3 border-b border-border flex items-center justify-start gap-5"
+            class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between"
           >
             <span
-              class="text-[0.6rem] sm:text-xs font-bold text-slate-400 font-mono"
-              >RESPONSE BODY</span
+              class="text-xs font-bold text-slate-400 font-mono uppercase tracking-wider"
+              >Response Body</span
             >
             <span
-              class="text-[0.55rem] sm:text-[0.65rem] text-emerald-500 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded font-mono font-semibold mr-2 sm:mr-12"
+              class="text-[0.65rem] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold mr-16"
               >200 OK</span
             >
           </div>
+
           <div
-            class="p-3 sm:p-5 overflow-x-auto bg-[rgba(7,10,18,0.9)] max-h-60 sm:max-h-80 overflow-y-auto custom-scrollbar"
+            class="p-4 overflow-x-auto max-h-64 sm:max-h-80 overflow-y-auto custom-scrollbar"
             id="json-response-pane"
             data-raw={jsonString}
           >
             <Code code={jsonString} lang="json" theme="github-dark" />
           </div>
 
+          <!-- Copy JSON Button -->
           <button
-            class="native-copy-trigger absolute top-2 sm:top-3 right-2 sm:right-3 inline-flex items-center gap-1 bg-slate-800 border border-slate-600 rounded-md text-slate-300 font-sans text-[0.6rem] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
+            class="native-copy-trigger absolute top-2.5 right-2.5 inline-flex items-center gap-1 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-md text-slate-300 font-sans text-xs font-semibold px-2.5 py-1 cursor-pointer transition-all z-20 hover:bg-slate-700 hover:border-cyan-400 hover:text-white"
             id="copy-json-btn"
             title="Copy JSON Response"
           >
@@ -452,11 +502,11 @@ const jsonString = JSON.stringify(exampleResponse, null, 2);
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #1f2937;
+    background: #1e293b;
     border-radius: 10px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #374151;
+    background: #334155;
   }
   .back-link:hover {
     color: #00d2ff !important;
